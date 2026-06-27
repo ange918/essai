@@ -1,13 +1,27 @@
 import { motion } from "framer-motion";
-import {
-  Menu, ChevronDown, ChevronUp, Quote, Star,
-  ShieldCheck, Zap, HeadphonesIcon, Globe,
-  CreditCard, Building, Landmark, Home, Car, Heart, Umbrella,
-} from "lucide-react";
+import { Menu, ChevronDown, ChevronUp, Quote, Star } from "lucide-react";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { useState, useRef, useEffect } from "react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+
+import {
+  CreditCardIcon,
+  BuildingOffice2Icon,
+  HomeIcon,
+  HomeModernIcon,
+  BanknotesIcon,
+  TruckIcon,
+  ShieldCheckIcon,
+  SparklesIcon,
+  GiftIcon,
+  LockClosedIcon,
+  BoltIcon,
+  PhoneArrowUpRightIcon,
+  GlobeAltIcon,
+  CheckCircleIcon,
+  StarIcon as HeroStar,
+} from "@heroicons/react/24/outline";
 
 /* ─── DATA ─────────────────────────────────────────────── */
 
@@ -15,47 +29,32 @@ const navMenus = [
   {
     label: "Compte bancaire",
     items: [
-      { label: "Compte Personnel", href: "/offres/compte-personnel", icon: CreditCard, desc: "L'essentiel au quotidien" },
-      { label: "Compte Business", href: "/offres/compte-business", icon: Building, desc: "Pour les professionnels" },
-      { label: "Carte Bancaire", href: "/offres/carte-bancaire", icon: CreditCard, desc: "Visa & Gold internationale" },
+      { label: "Compte Personnel", href: "/offres/compte-personnel", Icon: CreditCardIcon, desc: "L'essentiel au quotidien" },
+      { label: "Compte Business", href: "/offres/compte-business", Icon: BuildingOffice2Icon, desc: "Pour les professionnels" },
+      { label: "Carte Bancaire", href: "/offres/carte-bancaire", Icon: SparklesIcon, desc: "Visa & Gold internationale" },
     ],
   },
   {
     label: "Crédit Bancaire",
     items: [
-      { label: "Prêt Immobilier", href: "/credits/pret-immobilier", icon: Landmark, desc: "Financez votre bien" },
-      { label: "Prêt Personnel", href: "/credits/pret-personnel", icon: Heart, desc: "Tous vos projets" },
-      { label: "Prêt Auto", href: "/credits/pret-auto", icon: Car, desc: "Roulez sereinement" },
+      { label: "Prêt Immobilier", href: "/credits/pret-immobilier", Icon: HomeIcon, desc: "Financez votre bien" },
+      { label: "Prêt Personnel", href: "/credits/pret-personnel", Icon: BanknotesIcon, desc: "Tous vos projets" },
+      { label: "Prêt Auto", href: "/credits/pret-auto", Icon: TruckIcon, desc: "Roulez sereinement" },
     ],
   },
   {
     label: "Assurance Partenaire",
     items: [
-      { label: "Assurance Vie", href: "/assurances/assurance-vie", icon: ShieldCheck, desc: "Protégez vos proches" },
-      { label: "Assurance Habitat", href: "/assurances/assurance-habitat", icon: Umbrella, desc: "Votre logement à 360°" },
+      { label: "Assurance Vie", href: "/assurances/assurance-vie", Icon: ShieldCheckIcon, desc: "Protégez vos proches" },
+      { label: "Assurance Habitat", href: "/assurances/assurance-habitat", Icon: HomeModernIcon, desc: "Votre logement à 360°" },
     ],
   },
 ];
 
 const testimonials = [
-  {
-    name: "Amara Diallo",
-    role: "Entrepreneur",
-    text: "NELLOA BANK a transformé ma façon de gérer mes finances. L'ouverture de compte a été ultra rapide et la prime de bienvenue est réelle. Je recommande !",
-    initials: "AD",
-  },
-  {
-    name: "Sophie Martin",
-    role: "Freelance Designer",
-    text: "Le tableau de bord est clair et intuitif. Fini les frais cachés, fini les longues attentes. Mon compte courant NELLOA m'a simplifié la vie au quotidien.",
-    initials: "SM",
-  },
-  {
-    name: "Kouassi Bamba",
-    role: "Responsable commercial",
-    text: "Le compte Premium vaut vraiment son nom. Mon conseiller dédié répond en moins d'une heure et le cashback 2 % m'a fait économiser plusieurs centaines d'euros en un mois.",
-    initials: "KB",
-  },
+  { name: "Amara Diallo", role: "Entrepreneur", text: "NELLOA BANK a transformé ma façon de gérer mes finances. L'ouverture de compte a été ultra rapide et la prime de bienvenue est réelle. Je recommande !", initials: "AD" },
+  { name: "Sophie Martin", role: "Freelance Designer", text: "Le tableau de bord est clair et intuitif. Fini les frais cachés, fini les longues attentes. Mon compte courant NELLOA m'a simplifié la vie au quotidien.", initials: "SM" },
+  { name: "Kouassi Bamba", role: "Responsable commercial", text: "Le compte Premium vaut vraiment son nom. Mon conseiller dédié répond en moins d'une heure et le cashback 2 % m'a fait économiser plusieurs centaines d'euros.", initials: "KB" },
 ];
 
 const faqs = [
@@ -67,7 +66,7 @@ const faqs = [
   { question: "Comment contacter le service client ?", answer: "Notre équipe est disponible 7j/7 par email et par chat en direct depuis votre espace client. Les titulaires d'un compte Premium bénéficient d'un conseiller dédié joignable directement." },
 ];
 
-/* ─── COMPONENTS ────────────────────────────────────────── */
+/* ─── DROPDOWN COMPONENT ────────────────────────────────── */
 
 function DropdownMenu({ label, items }: { label: string; items: typeof navMenus[0]["items"] }) {
   const [open, setOpen] = useState(false);
@@ -102,7 +101,7 @@ function DropdownMenu({ label, items }: { label: string; items: typeof navMenus[
               data-testid={`nav-link-${item.label}`}
             >
               <div className="h-8 w-8 rounded-lg bg-primary/10 flex items-center justify-center shrink-0 mt-0.5 group-hover:bg-primary/20 transition-colors">
-                <item.icon className="h-4 w-4 text-primary" />
+                <item.Icon className="h-4 w-4 text-primary" />
               </div>
               <div>
                 <p className="text-sm font-semibold text-foreground">{item.label}</p>
@@ -116,6 +115,8 @@ function DropdownMenu({ label, items }: { label: string; items: typeof navMenus[
   );
 }
 
+/* ─── FAQ ITEM ──────────────────────────────────────────── */
+
 function FAQItem({ question, answer }: { question: string; answer: string }) {
   const [open, setOpen] = useState(false);
   return (
@@ -127,8 +128,7 @@ function FAQItem({ question, answer }: { question: string; answer: string }) {
         <span className="font-semibold text-foreground pr-4">{question}</span>
         {open
           ? <ChevronUp className="h-5 w-5 text-primary shrink-0" />
-          : <ChevronDown className="h-5 w-5 text-muted-foreground shrink-0" />
-        }
+          : <ChevronDown className="h-5 w-5 text-muted-foreground shrink-0" />}
       </button>
       {open && (
         <div className="px-5 pb-5 bg-card border-t border-border">
@@ -152,11 +152,8 @@ export function LandingPage() {
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <Link href="/" className="font-bold text-xl text-primary">NELLOA BANK</Link>
 
-          {/* Desktop nav */}
           <nav className="hidden lg:flex items-center gap-6">
-            {navMenus.map((m) => (
-              <DropdownMenu key={m.label} label={m.label} items={m.items} />
-            ))}
+            {navMenus.map((m) => <DropdownMenu key={m.label} label={m.label} items={m.items} />)}
             <a href="#pourquoi" className="text-sm font-medium text-foreground hover:text-primary transition-colors">Pourquoi nous</a>
             <a href="#faq" className="text-sm font-medium text-foreground hover:text-primary transition-colors">FAQ</a>
           </nav>
@@ -170,7 +167,6 @@ export function LandingPage() {
             </Link>
           </div>
 
-          {/* Mobile burger */}
           <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
             <SheetTrigger asChild>
               <Button variant="ghost" size="icon" className="lg:hidden">
@@ -182,13 +178,9 @@ export function LandingPage() {
                 <div key={m.label} className="mb-4">
                   <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground px-2 mb-2">{m.label}</p>
                   {m.items.map((item) => (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      onClick={() => setIsMenuOpen(false)}
-                      className="flex items-center gap-3 px-2 py-2.5 text-sm font-medium text-foreground hover:text-primary rounded-lg hover:bg-primary/5 transition-colors"
-                    >
-                      <item.icon className="h-4 w-4 text-primary" />
+                    <Link key={item.href} href={item.href} onClick={() => setIsMenuOpen(false)}
+                      className="flex items-center gap-3 px-2 py-2.5 text-sm font-medium text-foreground hover:text-primary rounded-lg hover:bg-primary/5 transition-colors">
+                      <item.Icon className="h-4 w-4 text-primary" />
                       {item.label}
                     </Link>
                   ))}
@@ -209,20 +201,11 @@ export function LandingPage() {
 
       {/* ── HERO ── */}
       <section className="relative flex items-center justify-center min-h-[680px] overflow-hidden">
-        {/* Background image */}
-        <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: "url('https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=1600&q=80&auto=format&fit=crop')" }}
-        />
-        {/* Gradient overlay */}
+        <div className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: "url('https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=1600&q=80&auto=format&fit=crop')" }} />
         <div className="absolute inset-0 bg-gradient-to-br from-[#1E3A8A]/90 via-[#1E3A8A]/80 to-[#3B82F6]/75" />
-
         <div className="container relative z-10 px-4 py-24 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
+          <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 max-w-4xl mx-auto tracking-tight">
               La banque qui vous fait confiance
             </h1>
@@ -249,16 +232,9 @@ export function LandingPage() {
       <section id="about" className="py-20 bg-white border-b border-border">
         <div className="container mx-auto px-4 max-w-6xl">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-            >
+            <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }}>
               <p className="text-sm font-semibold text-secondary uppercase tracking-widest mb-3">À propos de nous</p>
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
-                Une banque digitale pensée pour vous
-              </h2>
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">Une banque digitale pensée pour vous</h2>
               <p className="text-muted-foreground leading-relaxed mb-6">
                 NELLOA BANK est née d'une conviction simple : la banque doit s'adapter à votre vie, pas l'inverse. Fini les agences fermées le week-end, les formulaires papier et les frais opaques. Avec nous, tout se fait en ligne, en toute transparence.
               </p>
@@ -266,11 +242,7 @@ export function LandingPage() {
                 Fondée par des experts de la finance et de la technologie, NELLOA BANK accompagne des milliers de clients dans la gestion de leurs comptes, crédits et assurances — avec une équipe support disponible 7 jours sur 7.
               </p>
               <div className="grid grid-cols-3 gap-6">
-                {[
-                  { value: "50 000+", label: "Clients actifs" },
-                  { value: "99,9 %", label: "Disponibilité" },
-                  { value: "7j/7", label: "Support client" },
-                ].map((stat) => (
+                {[{ value: "50 000+", label: "Clients actifs" }, { value: "99,9 %", label: "Disponibilité" }, { value: "7j/7", label: "Support client" }].map((stat) => (
                   <div key={stat.label} className="text-center p-4 bg-slate-50 rounded-xl border border-border">
                     <p className="text-2xl font-bold text-primary">{stat.value}</p>
                     <p className="text-xs text-muted-foreground mt-1">{stat.label}</p>
@@ -279,19 +251,13 @@ export function LandingPage() {
               </div>
             </motion.div>
 
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="grid grid-cols-2 gap-4"
-            >
+            <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.1 }} className="grid grid-cols-2 gap-4">
               {[
-                { icon: ShieldCheck, title: "Sécurité maximale", desc: "Chiffrement SSL 256 bits et authentification à deux facteurs pour protéger vos données." },
-                { icon: Zap, title: "Ouverture en 3 min", desc: "Aucun rendez-vous nécessaire. Ouvrez votre compte 100 % en ligne, à toute heure." },
-                { icon: HeadphonesIcon, title: "Support 7j/7", desc: "Une équipe dédiée disponible chaque jour pour répondre à toutes vos questions." },
-                { icon: Globe, title: "Partout dans le monde", desc: "Virements internationaux et carte acceptée dans plus de 150 pays." },
-              ].map(({ icon: Icon, title, desc }) => (
+                { Icon: LockClosedIcon, title: "Sécurité maximale", desc: "Chiffrement SSL 256 bits et authentification à deux facteurs pour protéger vos données." },
+                { Icon: BoltIcon, title: "Ouverture en 3 min", desc: "Aucun rendez-vous nécessaire. Ouvrez votre compte 100 % en ligne, à toute heure." },
+                { Icon: PhoneArrowUpRightIcon, title: "Support 7j/7", desc: "Une équipe dédiée disponible chaque jour pour répondre à toutes vos questions." },
+                { Icon: GlobeAltIcon, title: "Partout dans le monde", desc: "Virements internationaux et carte acceptée dans plus de 150 pays." },
+              ].map(({ Icon, title, desc }) => (
                 <div key={title} className="p-5 bg-card border border-border rounded-2xl hover:border-primary/30 hover:shadow-sm transition-all duration-200">
                   <div className="h-10 w-10 rounded-xl bg-primary/10 flex items-center justify-center mb-3">
                     <Icon className="h-5 w-5 text-primary" />
@@ -321,21 +287,29 @@ export function LandingPage() {
             </h3>
             <div className="grid md:grid-cols-3 gap-6">
               {[
-                { href: "/offres/compte-personnel", icon: CreditCard, titre: "Compte Personnel", desc: "L'essentiel pour vos dépenses quotidiennes.", avantages: ["IBAN personnel", "Carte virtuelle", "Suivi des dépenses"], type: "personnel" },
-                { href: "/offres/compte-business", icon: Building, titre: "Compte Business", desc: "Pour les entrepreneurs et professionnels.", avantages: ["Virements illimités", "Domiciliation bancaire", "Chéquier"], type: "courant", popular: true },
-                { href: "/offres/carte-bancaire", icon: CreditCard, titre: "Carte Bancaire", desc: "Visa classique ou Gold internationale.", avantages: ["Paiement sans contact", "Cashback 2 %", "Assurance voyage"], type: "premium" },
+                { href: "/offres/compte-personnel", Icon: CreditCardIcon, titre: "Compte Personnel", desc: "L'essentiel pour vos dépenses quotidiennes.", avantages: ["IBAN personnel", "Carte virtuelle", "Suivi des dépenses"], type: "personnel" },
+                { href: "/offres/compte-business", Icon: BuildingOffice2Icon, titre: "Compte Business", desc: "Pour les entrepreneurs et professionnels.", avantages: ["Virements illimités", "Domiciliation bancaire", "Chéquier"], type: "courant", popular: true },
+                { href: "/offres/carte-bancaire", Icon: SparklesIcon, titre: "Carte Bancaire", desc: "Visa classique ou Gold internationale.", avantages: ["Paiement sans contact", "Cashback 2 %", "Assurance voyage"], type: "premium" },
               ].map((offre) => (
                 <div key={offre.href} className={`bg-card rounded-2xl p-7 border flex flex-col transition-all duration-200 hover:shadow-md relative ${offre.popular ? "border-2 border-primary shadow-md md:-translate-y-2" : "border-border"}`}>
                   {offre.popular && <div className="absolute top-0 right-0 bg-primary text-white text-xs font-bold px-3 py-1 rounded-bl-lg rounded-tr-xl">Populaire</div>}
                   <div className={`h-12 w-12 rounded-full flex items-center justify-center mb-5 ${offre.popular ? "bg-primary" : "bg-primary/10"}`}>
-                    <offre.icon className={`h-6 w-6 ${offre.popular ? "text-white" : "text-primary"}`} />
+                    <offre.Icon className={`h-6 w-6 ${offre.popular ? "text-white" : "text-primary"}`} />
                   </div>
                   <h4 className="text-xl font-bold mb-2">{offre.titre}</h4>
                   <p className="text-muted-foreground text-sm mb-5 flex-1">{offre.desc}</p>
                   <ul className="space-y-2 mb-6">
-                    {offre.avantages.map((a) => <li key={a} className="flex items-center gap-2 text-sm"><span className="text-primary font-bold">✓</span>{a}</li>)}
+                    {offre.avantages.map((a) => (
+                      <li key={a} className="flex items-center gap-2 text-sm">
+                        <CheckCircleIcon className="h-4 w-4 text-primary shrink-0" />
+                        {a}
+                      </li>
+                    ))}
                   </ul>
-                  <div className="bg-green-50 text-green-700 p-2.5 rounded-lg mb-5 text-center font-medium text-sm">3 200 € offerts à l'ouverture</div>
+                  <div className="flex items-center justify-center gap-2 bg-green-50 text-green-700 p-2.5 rounded-lg mb-5 text-sm font-medium">
+                    <GiftIcon className="h-4 w-4 shrink-0" />
+                    3 200 € offerts à l'ouverture
+                  </div>
                   <Link href={offre.href}>
                     <Button className={`w-full ${offre.popular ? "bg-primary hover:bg-primary/90 text-white" : ""}`} variant={offre.popular ? "default" : "outline"}>
                       Découvrir l'offre
@@ -354,13 +328,13 @@ export function LandingPage() {
             </h3>
             <div className="grid md:grid-cols-3 gap-6">
               {[
-                { href: "/credits/pret-immobilier", icon: Landmark, titre: "Prêt Immobilier", desc: "Financez l'acquisition de votre bien immobilier.", tag: "Dès 2,8 % annuel" },
-                { href: "/credits/pret-personnel", icon: Heart, titre: "Prêt Personnel", desc: "Tous vos projets financés rapidement, sans justificatif.", tag: "Réponse sous 24h" },
-                { href: "/credits/pret-auto", icon: Car, titre: "Prêt Auto", desc: "Roulez maintenant, payez sereinement en mensualités fixes.", tag: "Jusqu'à 80 000 €" },
+                { href: "/credits/pret-immobilier", Icon: HomeIcon, titre: "Prêt Immobilier", desc: "Financez l'acquisition de votre bien immobilier.", tag: "Dès 2,8 % annuel" },
+                { href: "/credits/pret-personnel", Icon: BanknotesIcon, titre: "Prêt Personnel", desc: "Tous vos projets financés rapidement, sans justificatif.", tag: "Réponse sous 24h" },
+                { href: "/credits/pret-auto", Icon: TruckIcon, titre: "Prêt Auto", desc: "Roulez maintenant, payez sereinement en mensualités fixes.", tag: "Jusqu'à 80 000 €" },
               ].map((c) => (
                 <Link key={c.href} href={c.href} className="group bg-card rounded-2xl p-7 border border-border flex flex-col hover:border-primary/30 hover:shadow-md transition-all duration-200">
                   <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center mb-5 group-hover:bg-primary/20 transition-colors">
-                    <c.icon className="h-6 w-6 text-primary" />
+                    <c.Icon className="h-6 w-6 text-primary" />
                   </div>
                   <h4 className="text-xl font-bold mb-2">{c.titre}</h4>
                   <p className="text-muted-foreground text-sm mb-4 flex-1">{c.desc}</p>
@@ -379,12 +353,12 @@ export function LandingPage() {
             </h3>
             <div className="grid md:grid-cols-2 gap-6 max-w-3xl">
               {[
-                { href: "/assurances/assurance-vie", icon: ShieldCheck, titre: "Assurance Vie", desc: "Préparez l'avenir et protégez vos proches avec un placement à long terme avantageux sur le plan fiscal.", tag: "Capital garanti" },
-                { href: "/assurances/assurance-habitat", icon: Home, titre: "Assurance Habitat", desc: "Couvrez votre logement contre tous les risques : incendie, dégât des eaux, vol et responsabilité civile.", tag: "Attestation immédiate" },
+                { href: "/assurances/assurance-vie", Icon: ShieldCheckIcon, titre: "Assurance Vie", desc: "Préparez l'avenir et protégez vos proches avec un placement à long terme avantageux sur le plan fiscal.", tag: "Capital garanti" },
+                { href: "/assurances/assurance-habitat", Icon: HomeModernIcon, titre: "Assurance Habitat", desc: "Couvrez votre logement contre tous les risques : incendie, dégât des eaux, vol et responsabilité civile.", tag: "Attestation immédiate" },
               ].map((a) => (
                 <Link key={a.href} href={a.href} className="group bg-card rounded-2xl p-7 border border-border flex gap-5 items-start hover:border-primary/30 hover:shadow-md transition-all duration-200">
                   <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center shrink-0 group-hover:bg-primary/20 transition-colors">
-                    <a.icon className="h-6 w-6 text-primary" />
+                    <a.Icon className="h-6 w-6 text-primary" />
                   </div>
                   <div>
                     <h4 className="text-lg font-bold mb-1">{a.titre}</h4>
@@ -406,14 +380,19 @@ export function LandingPage() {
           </div>
           <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
             {[
-              { n: "1", title: "Je crée mon compte", desc: "Remplissez le formulaire en 2 minutes." },
-              { n: "2", title: "Je vérifie mon identité", desc: "Déposez votre pièce d'identité en toute sécurité." },
-              { n: "3", title: "J'accède à mes fonds", desc: "Votre compte est activé par notre équipe dans les plus brefs délais." },
-            ].map((s) => (
-              <div key={s.n} className="flex flex-col items-center text-center">
-                <div className="w-16 h-16 rounded-full bg-primary text-white flex items-center justify-center text-2xl font-bold mb-6">{s.n}</div>
-                <h4 className="text-xl font-bold mb-2">{s.title}</h4>
-                <p className="text-muted-foreground">{s.desc}</p>
+              { n: "1", Icon: CreditCardIcon, title: "Je crée mon compte", desc: "Remplissez le formulaire en 2 minutes." },
+              { n: "2", Icon: LockClosedIcon, title: "Je vérifie mon identité", desc: "Déposez votre pièce d'identité en toute sécurité." },
+              { n: "3", Icon: BanknotesIcon, title: "J'accède à mes fonds", desc: "Votre compte est activé par notre équipe dans les plus brefs délais." },
+            ].map(({ n, Icon, title, desc }) => (
+              <div key={n} className="flex flex-col items-center text-center">
+                <div className="w-16 h-16 rounded-full bg-primary text-white flex items-center justify-center mb-4 relative">
+                  <span className="text-2xl font-bold">{n}</span>
+                </div>
+                <div className="h-10 w-10 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
+                  <Icon className="h-5 w-5 text-primary" />
+                </div>
+                <h4 className="text-xl font-bold mb-2">{title}</h4>
+                <p className="text-muted-foreground">{desc}</p>
               </div>
             ))}
           </div>
@@ -430,11 +409,11 @@ export function LandingPage() {
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
             {[
-              { icon: ShieldCheck, title: "Sécurité bancaire", desc: "Chiffrement SSL 256 bits, authentification à deux facteurs et surveillance 24h/24." },
-              { icon: Zap, title: "Ouverture en 3 min", desc: "Fini les rendez-vous en agence. Ouvrez votre compte entièrement en ligne, à toute heure." },
-              { icon: HeadphonesIcon, title: "Support 7j/7", desc: "Notre équipe est disponible tous les jours pour répondre à vos questions." },
-              { icon: Globe, title: "Utilisable partout", desc: "Virements internationaux, carte acceptée dans le monde entier." },
-            ].map(({ icon: Icon, title, desc }, i) => (
+              { Icon: LockClosedIcon, title: "Sécurité bancaire", desc: "Chiffrement SSL 256 bits, authentification à deux facteurs et surveillance 24h/24." },
+              { Icon: BoltIcon, title: "Ouverture en 3 min", desc: "Fini les rendez-vous en agence. Ouvrez votre compte entièrement en ligne, à toute heure." },
+              { Icon: PhoneArrowUpRightIcon, title: "Support 7j/7", desc: "Notre équipe est disponible tous les jours pour répondre à vos questions." },
+              { Icon: GlobeAltIcon, title: "Utilisable partout", desc: "Virements internationaux, carte acceptée dans le monde entier." },
+            ].map(({ Icon, title, desc }, i) => (
               <motion.div
                 key={title}
                 initial={{ opacity: 0, y: 20 }}
@@ -530,7 +509,10 @@ export function LandingPage() {
                 <ul className="space-y-2">
                   {m.items.map((item) => (
                     <li key={item.href}>
-                      <Link href={item.href} className="text-white/60 text-sm hover:text-white transition-colors">{item.label}</Link>
+                      <Link href={item.href} className="text-white/60 text-sm hover:text-white transition-colors flex items-center gap-2">
+                        <item.Icon className="h-3.5 w-3.5 shrink-0" />
+                        {item.label}
+                      </Link>
                     </li>
                   ))}
                 </ul>

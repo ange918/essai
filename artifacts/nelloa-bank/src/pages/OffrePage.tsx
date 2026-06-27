@@ -1,8 +1,22 @@
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, CheckCircle2, ArrowRight } from "lucide-react";
+import { ArrowLeft, ArrowRight, CheckCircle2 } from "lucide-react";
 import { motion } from "framer-motion";
+import type { ComponentType, SVGProps } from "react";
 
+import {
+  CreditCardIcon,
+  BuildingOffice2Icon,
+  HomeIcon,
+  HomeModernIcon,
+  BanknotesIcon,
+  TruckIcon,
+  ShieldCheckIcon,
+  SparklesIcon,
+  GiftIcon,
+} from "@heroicons/react/24/outline";
+
+type HeroIcon = ComponentType<SVGProps<SVGSVGElement>>;
 type Step = { titre: string; desc: string };
 
 type OffreData = {
@@ -17,7 +31,7 @@ type OffreData = {
   prime?: string;
   cta: string;
   couleur: string;
-  icon: string;
+  Icon: HeroIcon;
   registerType?: string;
 };
 
@@ -27,7 +41,8 @@ const offres: Record<string, OffreData> = {
     categorie: "Compte Bancaire",
     titre: "Compte Personnel",
     sousTitre: "L'essentiel pour vos dépenses quotidiennes",
-    description: "Le Compte Personnel NELLOA BANK est conçu pour vous offrir une gestion simple et efficace de vos finances du quotidien. Profitez d'un IBAN personnel, d'une carte virtuelle sécurisée et d'un suivi détaillé de vos dépenses — le tout depuis votre espace en ligne.",
+    description:
+      "Le Compte Personnel NELLOA BANK est conçu pour vous offrir une gestion simple et efficace de vos finances du quotidien. Profitez d'un IBAN personnel, d'une carte virtuelle sécurisée et d'un suivi détaillé de vos dépenses — le tout depuis votre espace en ligne.",
     avantages: [
       "IBAN personnel dédié",
       "Carte virtuelle Visa incluse",
@@ -49,7 +64,7 @@ const offres: Record<string, OffreData> = {
     prime: "3 200 € offerts à l'ouverture",
     cta: "Ouvrir un Compte Personnel",
     couleur: "from-[#1E3A8A] to-[#3B82F6]",
-    icon: "💳",
+    Icon: CreditCardIcon,
     registerType: "personnel",
   },
   "compte-business": {
@@ -57,7 +72,8 @@ const offres: Record<string, OffreData> = {
     categorie: "Compte Bancaire",
     titre: "Compte Business",
     sousTitre: "La solution bancaire pour les professionnels et entrepreneurs",
-    description: "Le Compte Business NELLOA BANK est taillé pour les indépendants, auto-entrepreneurs et PME qui souhaitent séparer leurs finances professionnelles et bénéficier d'outils dédiés à la gestion d'entreprise.",
+    description:
+      "Le Compte Business NELLOA BANK est taillé pour les indépendants, auto-entrepreneurs et PME qui souhaitent séparer leurs finances professionnelles et bénéficier d'outils dédiés à la gestion d'entreprise.",
     avantages: [
       "IBAN professionnel séparé",
       "Carte Business Mastercard",
@@ -79,7 +95,7 @@ const offres: Record<string, OffreData> = {
     prime: "3 200 € offerts à l'ouverture",
     cta: "Ouvrir un Compte Business",
     couleur: "from-[#1E3A8A] to-[#0EA5E9]",
-    icon: "🏦",
+    Icon: BuildingOffice2Icon,
     registerType: "courant",
   },
   "carte-bancaire": {
@@ -87,7 +103,8 @@ const offres: Record<string, OffreData> = {
     categorie: "Compte Bancaire",
     titre: "Carte Bancaire",
     sousTitre: "Une carte pour payer partout, en toute sécurité",
-    description: "La carte NELLOA BANK vous accompagne dans toutes vos transactions, en ligne comme en magasin. Choisissez entre notre carte virtuelle gratuite ou notre carte physique Gold internationale, acceptée dans plus de 150 pays.",
+    description:
+      "La carte NELLOA BANK vous accompagne dans toutes vos transactions, en ligne comme en magasin. Choisissez entre notre carte virtuelle gratuite ou notre carte physique Gold internationale, acceptée dans plus de 150 pays.",
     avantages: [
       "Carte virtuelle disponible immédiatement",
       "Carte physique Gold internationale",
@@ -108,7 +125,7 @@ const offres: Record<string, OffreData> = {
     prime: "Carte offerte à l'ouverture",
     cta: "Obtenir ma carte",
     couleur: "from-[#1E3A8A] to-[#7C3AED]",
-    icon: "💳",
+    Icon: SparklesIcon,
     registerType: "premium",
   },
   "pret-immobilier": {
@@ -116,7 +133,8 @@ const offres: Record<string, OffreData> = {
     categorie: "Crédit Bancaire",
     titre: "Prêt Immobilier",
     sousTitre: "Financez votre projet immobilier aux meilleures conditions",
-    description: "NELLOA BANK vous accompagne dans l'acquisition de votre résidence principale, secondaire ou d'un bien locatif. Nos conseillers analysent votre dossier et vous proposent un taux compétitif adapté à votre profil.",
+    description:
+      "NELLOA BANK vous accompagne dans l'acquisition de votre résidence principale, secondaire ou d'un bien locatif. Nos conseillers analysent votre dossier et vous proposent un taux compétitif adapté à votre profil.",
     avantages: [
       "Taux fixe dès 2,8 % annuel",
       "Durée jusqu'à 25 ans",
@@ -133,12 +151,12 @@ const offres: Record<string, OffreData> = {
     ],
     steps: [
       { titre: "Je simule mon prêt", desc: "Indiquez le montant, la durée souhaitée et vos revenus. Obtenez une estimation de vos mensualités en temps réel." },
-      { titre: "Je dépose mon dossier", desc: "Transmettez vos justificatifs (revenus, identité, compromis de vente). Un conseiller dédié analyse votre demande sous 48h." },
+      { titre: "Je dépose mon dossier", desc: "Transmettez vos justificatifs (revenus, identité, compromis de vente). Un conseiller analyse votre demande sous 48h." },
       { titre: "Je signe et je finance", desc: "Offre de prêt validée, signature électronique, déblocage des fonds directement chez le notaire ou le vendeur." },
     ],
     cta: "Simuler mon prêt immobilier",
     couleur: "from-[#065F46] to-[#059669]",
-    icon: "🏠",
+    Icon: HomeIcon,
     registerType: "personnel",
   },
   "pret-personnel": {
@@ -146,7 +164,8 @@ const offres: Record<string, OffreData> = {
     categorie: "Crédit Bancaire",
     titre: "Prêt Personnel",
     sousTitre: "Un financement flexible pour tous vos projets",
-    description: "Voyages, travaux, mariage, électroménager... Le prêt personnel NELLOA BANK vous donne accès aux fonds dont vous avez besoin rapidement, sans justificatif d'utilisation, avec des mensualités fixes et prévisibles.",
+    description:
+      "Voyages, travaux, mariage, électroménager... Le prêt personnel NELLOA BANK vous donne accès aux fonds dont vous avez besoin rapidement, sans justificatif d'utilisation, avec des mensualités fixes et prévisibles.",
     avantages: [
       "De 500 € à 75 000 €",
       "Durée de 12 à 84 mois",
@@ -167,7 +186,7 @@ const offres: Record<string, OffreData> = {
     ],
     cta: "Demander mon prêt personnel",
     couleur: "from-[#1E3A8A] to-[#3B82F6]",
-    icon: "💰",
+    Icon: BanknotesIcon,
     registerType: "personnel",
   },
   "pret-auto": {
@@ -175,7 +194,8 @@ const offres: Record<string, OffreData> = {
     categorie: "Crédit Bancaire",
     titre: "Prêt Auto",
     sousTitre: "Roulez maintenant, payez sereinement",
-    description: "Que ce soit pour l'achat d'un véhicule neuf, d'occasion ou d'un deux-roues, le prêt auto NELLOA BANK vous offre un financement rapide avec des conditions avantageuses. Notre simulateur en ligne vous donne une réponse immédiate.",
+    description:
+      "Que ce soit pour l'achat d'un véhicule neuf, d'occasion ou d'un deux-roues, le prêt auto NELLOA BANK vous offre un financement rapide avec des conditions avantageuses. Notre simulateur en ligne vous donne une réponse immédiate.",
     avantages: [
       "Financement jusqu'à 80 000 €",
       "Durée de 12 à 72 mois",
@@ -196,7 +216,7 @@ const offres: Record<string, OffreData> = {
     ],
     cta: "Financer mon véhicule",
     couleur: "from-[#7C2D12] to-[#EA580C]",
-    icon: "🚗",
+    Icon: TruckIcon,
     registerType: "personnel",
   },
   "assurance-vie": {
@@ -204,7 +224,8 @@ const offres: Record<string, OffreData> = {
     categorie: "Assurance Partenaire",
     titre: "Assurance Vie",
     sousTitre: "Préparez l'avenir et protégez vos proches",
-    description: "L'assurance vie NELLOA BANK est un placement à long terme qui combine protection de vos bénéficiaires et valorisation de votre épargne. Bénéficiez d'une fiscalité avantageuse et d'un capital garanti.",
+    description:
+      "L'assurance vie NELLOA BANK est un placement à long terme qui combine protection de vos bénéficiaires et valorisation de votre épargne. Bénéficiez d'une fiscalité avantageuse et d'un capital garanti.",
     avantages: [
       "Capital garanti fonds euros",
       "Fiscalité avantageuse après 8 ans",
@@ -225,7 +246,7 @@ const offres: Record<string, OffreData> = {
     ],
     cta: "Souscrire une assurance vie",
     couleur: "from-[#1E3A8A] to-[#6D28D9]",
-    icon: "🛡️",
+    Icon: ShieldCheckIcon,
     registerType: "premium",
   },
   "assurance-habitat": {
@@ -233,7 +254,8 @@ const offres: Record<string, OffreData> = {
     categorie: "Assurance Partenaire",
     titre: "Assurance Habitat",
     sousTitre: "Votre domicile protégé à 360°",
-    description: "L'assurance habitation NELLOA BANK couvre votre logement et son contenu contre tous les risques du quotidien : incendie, dégât des eaux, vol, catastrophes naturelles et responsabilité civile. Simple à souscrire, immédiate et sans paperasse.",
+    description:
+      "L'assurance habitation NELLOA BANK couvre votre logement et son contenu contre tous les risques du quotidien : incendie, dégât des eaux, vol, catastrophes naturelles et responsabilité civile. Simple à souscrire, immédiate et sans paperasse.",
     avantages: [
       "Couverture dégâts des eaux",
       "Protection incendie & explosion",
@@ -254,7 +276,7 @@ const offres: Record<string, OffreData> = {
     ],
     cta: "Assurer mon logement",
     couleur: "from-[#0F766E] to-[#14B8A6]",
-    icon: "🏡",
+    Icon: HomeModernIcon,
     registerType: "personnel",
   },
 };
@@ -273,6 +295,7 @@ export function OffrePage({ slug }: { slug: string }) {
     );
   }
 
+  const { Icon } = offre;
   const registerHref = `/register${offre.registerType ? `?type=${offre.registerType}` : ""}`;
 
   return (
@@ -301,11 +324,17 @@ export function OffrePage({ slug }: { slug: string }) {
             Retour à l'accueil
           </Link>
           <p className="text-white/70 text-sm font-semibold uppercase tracking-widest mb-3">{offre.categorie}</p>
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">{offre.icon} {offre.titre}</h1>
+          <div className="flex items-center gap-4 mb-4">
+            <div className="h-14 w-14 rounded-2xl bg-white/15 backdrop-blur-sm flex items-center justify-center shrink-0">
+              <Icon className="h-8 w-8 text-white" />
+            </div>
+            <h1 className="text-4xl md:text-5xl font-bold text-white">{offre.titre}</h1>
+          </div>
           <p className="text-xl text-white/90 max-w-2xl">{offre.sousTitre}</p>
           {offre.prime && (
-            <div className="mt-6 inline-block bg-white/20 backdrop-blur-sm text-white font-semibold px-4 py-2 rounded-full text-sm">
-              🎁 {offre.prime}
+            <div className="mt-6 inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm text-white font-semibold px-4 py-2 rounded-full text-sm">
+              <GiftIcon className="h-4 w-4" />
+              {offre.prime}
             </div>
           )}
         </div>
@@ -350,10 +379,16 @@ export function OffrePage({ slug }: { slug: string }) {
           {/* RIGHT — sticky CTA card */}
           <div className="lg:col-span-1">
             <div className="sticky top-24 bg-card border border-border rounded-2xl p-6 shadow-md">
-              <h3 className="text-xl font-bold text-foreground mb-2">{offre.titre}</h3>
+              <div className="flex items-center gap-3 mb-4">
+                <div className="h-10 w-10 rounded-xl bg-primary/10 flex items-center justify-center">
+                  <Icon className="h-5 w-5 text-primary" />
+                </div>
+                <h3 className="text-lg font-bold text-foreground">{offre.titre}</h3>
+              </div>
               {offre.prime && (
-                <div className="bg-green-50 text-green-700 rounded-lg p-3 text-sm font-medium text-center mb-6">
-                  🎁 {offre.prime}
+                <div className="flex items-center justify-center gap-2 bg-green-50 text-green-700 rounded-lg p-3 text-sm font-medium mb-6">
+                  <GiftIcon className="h-4 w-4 shrink-0" />
+                  {offre.prime}
                 </div>
               )}
               <p className="text-muted-foreground text-sm mb-6 leading-relaxed">
@@ -384,9 +419,7 @@ export function OffrePage({ slug }: { slug: string }) {
           </div>
 
           <div className="grid md:grid-cols-3 gap-8 relative">
-            {/* connector line (desktop only) */}
             <div className="hidden md:block absolute top-8 left-[calc(16.66%+1rem)] right-[calc(16.66%+1rem)] h-0.5 bg-border z-0" />
-
             {offre.steps.map((step, i) => (
               <motion.div
                 key={step.titre}
@@ -417,9 +450,12 @@ export function OffrePage({ slug }: { slug: string }) {
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-              Prêt à commencer ?
-            </h2>
+            <div className="flex justify-center mb-6">
+              <div className="h-16 w-16 rounded-2xl bg-white/15 backdrop-blur-sm flex items-center justify-center">
+                <Icon className="h-9 w-9 text-white" />
+              </div>
+            </div>
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Prêt à commencer ?</h2>
             <p className="text-white/85 text-lg mb-10 max-w-xl mx-auto">
               Ouvrez votre {offre.titre} en moins de 3 minutes.
               {offre.prime && ` Profitez de ${offre.prime}.`}
