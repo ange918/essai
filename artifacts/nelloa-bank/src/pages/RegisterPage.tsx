@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
-import { Link, useLocation } from "wouter";
+import { useLocation } from "wouter";
+import { Link } from "wouter";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -9,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { saveUsers, getUsers, setSession, getUserByEmail } from "@/lib/storage";
+import { Navbar } from "@/components/Navbar";
 
 function calcAge(dob: string): number {
   const birth = new Date(dob);
@@ -189,9 +191,7 @@ export function RegisterPage() {
 
   return (
     <div className="min-h-[100dvh] bg-slate-50 flex flex-col">
-      <header className="bg-white shadow-sm h-16 flex items-center px-4 md:px-8 shrink-0">
-        <Link href="/" className="font-bold text-xl text-primary">NELLOA BANK</Link>
-      </header>
+      <Navbar />
 
       <main className="flex-1 flex flex-col items-center justify-center p-4 md:p-8">
         <div className="w-full max-w-3xl">

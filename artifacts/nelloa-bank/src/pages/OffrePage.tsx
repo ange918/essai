@@ -3,6 +3,7 @@ import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, ArrowRight, CheckCircle2, ChevronDown, ShieldCheck, Headphones, Gift, Clock } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { Navbar } from "@/components/Navbar";
 import type { ComponentType, SVGProps } from "react";
 
 import {
@@ -708,19 +709,7 @@ export function OffrePage({ slug }: { slug: string }) {
     <div className="min-h-screen bg-background flex flex-col">
 
       {/* ── HEADER ── */}
-      <header className="sticky top-0 z-50 w-full bg-white shadow-sm border-b border-border">
-        <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-          <Link href="/" className="font-bold text-xl text-primary">NELLOA BANK</Link>
-          <div className="flex items-center gap-3">
-            <Link href="/login">
-              <Button variant="outline" className="border-primary text-primary hover:bg-primary/5">Connexion</Button>
-            </Link>
-            <Link href={registerHref}>
-              <Button className="bg-primary text-white hover:bg-primary/90">{offre.cta}</Button>
-            </Link>
-          </div>
-        </div>
-      </header>
+      <Navbar />
 
       {/* ── HERO BANNER ── */}
       <section className={`bg-gradient-to-br ${offre.couleur} py-20 px-4`}>
