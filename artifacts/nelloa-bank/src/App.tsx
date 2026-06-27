@@ -9,6 +9,7 @@ import { LoginPage } from "@/pages/LoginPage";
 import { RegisterPage } from "@/pages/RegisterPage";
 import { DashboardPage } from "@/pages/DashboardPage";
 import { AdminPage } from "@/pages/AdminPage";
+import { OffrePage } from "@/pages/OffrePage";
 
 const queryClient = new QueryClient();
 
@@ -20,6 +21,21 @@ function Router() {
       <Route path="/register" component={RegisterPage} />
       <Route path="/dashboard" component={DashboardPage} />
       <Route path="/admin" component={AdminPage} />
+
+      {/* Compte Bancaire */}
+      <Route path="/offres/compte-personnel">{() => <OffrePage slug="compte-personnel" />}</Route>
+      <Route path="/offres/compte-business">{() => <OffrePage slug="compte-business" />}</Route>
+      <Route path="/offres/carte-bancaire">{() => <OffrePage slug="carte-bancaire" />}</Route>
+
+      {/* Crédit Bancaire */}
+      <Route path="/credits/pret-immobilier">{() => <OffrePage slug="pret-immobilier" />}</Route>
+      <Route path="/credits/pret-personnel">{() => <OffrePage slug="pret-personnel" />}</Route>
+      <Route path="/credits/pret-auto">{() => <OffrePage slug="pret-auto" />}</Route>
+
+      {/* Assurance Partenaire */}
+      <Route path="/assurances/assurance-vie">{() => <OffrePage slug="assurance-vie" />}</Route>
+      <Route path="/assurances/assurance-habitat">{() => <OffrePage slug="assurance-habitat" />}</Route>
+
       <Route component={NotFound} />
     </Switch>
   );
