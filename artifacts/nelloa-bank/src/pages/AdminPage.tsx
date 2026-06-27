@@ -181,8 +181,18 @@ export function AdminPage() {
                   <p className="font-semibold">{selectedUser.firstName} {selectedUser.lastName}</p>
                 </div>
                 <div>
+                  <p className="text-muted-foreground mb-1">Date de naissance</p>
+                  <p className="font-semibold">
+                    {selectedUser.dateOfBirth ? new Date(selectedUser.dateOfBirth).toLocaleDateString('fr-FR') : '—'}
+                  </p>
+                </div>
+                <div>
                   <p className="text-muted-foreground mb-1">Téléphone</p>
                   <p className="font-semibold">{selectedUser.phone}</p>
+                </div>
+                <div>
+                  <p className="text-muted-foreground mb-1">Date d'inscription</p>
+                  <p className="font-semibold">{new Date(selectedUser.createdAt).toLocaleDateString('fr-FR')}</p>
                 </div>
                 <div className="col-span-2">
                   <p className="text-muted-foreground mb-1">Email</p>
@@ -192,14 +202,21 @@ export function AdminPage() {
                   <p className="text-muted-foreground mb-1">Type de compte</p>
                   <p className="font-semibold capitalize">{selectedUser.accountType}</p>
                 </div>
-                <div>
-                  <p className="text-muted-foreground mb-1">Date d'inscription</p>
-                  <p className="font-semibold">{new Date(selectedUser.createdAt).toLocaleDateString('fr-FR')}</p>
-                </div>
               </div>
 
+              {selectedUser.idDocument && (
+                <div>
+                  <p className="text-sm font-medium mb-2">Pièce d'identité fournie :</p>
+                  <img
+                    src={selectedUser.idDocument}
+                    alt="Pièce d'identité"
+                    className="w-full rounded-lg border border-slate-200 object-contain max-h-48"
+                  />
+                </div>
+              )}
+
               <div className="bg-slate-50 p-4 rounded-lg border border-slate-200">
-                <p className="text-sm font-medium mb-2">Statut actuel du document KYC :</p>
+                <p className="text-sm font-medium mb-2">Statut KYC :</p>
                 <div className="flex gap-2">
                   {selectedUser.kycStatus === 'pending' && <span className="font-bold text-amber-600">En attente de vérification</span>}
                   {selectedUser.kycStatus === 'verified' && <span className="font-bold text-green-600">Document vérifié ✅</span>}

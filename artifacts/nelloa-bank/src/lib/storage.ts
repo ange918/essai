@@ -2,6 +2,7 @@ export type User = {
   id: string
   firstName: string
   lastName: string
+  dateOfBirth: string
   phone: string
   email: string
   password: string
@@ -10,6 +11,7 @@ export type User = {
   currency: string
   status: 'blocked' | 'active'
   kycStatus: 'pending' | 'verified' | 'rejected'
+  idDocument: string
   createdAt: string
 }
 
