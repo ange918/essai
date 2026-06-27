@@ -1,7 +1,8 @@
+import { useState } from "react";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, ArrowRight, CheckCircle2 } from "lucide-react";
-import { motion } from "framer-motion";
+import { ArrowLeft, ArrowRight, CheckCircle2, ChevronDown, ShieldCheck, Headphones, Gift, Clock } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import type { ComponentType, SVGProps } from "react";
 
 import {
@@ -18,16 +19,26 @@ import {
 
 type HeroIcon = ComponentType<SVGProps<SVGSVGElement>>;
 type Step = { titre: string; desc: string };
+type TarifRow = { service: string; prix: string };
+type TarifSection = { titre: string; rows: TarifRow[] };
+type FaqItem = { q: string; a: string };
+type EligibiliteItem = { titre: string; desc: string };
+type AvantageCard = { titre: string; desc: string; Icon: ComponentType<{ className?: string }> };
 
 type OffreData = {
   slug: string;
   categorie: string;
   titre: string;
   sousTitre: string;
+  accroche?: string;
   description: string;
   avantages: string[];
+  avantagesCards?: AvantageCard[];
   conditions: string[];
+  eligibiliteDetail?: EligibiliteItem[];
   steps: Step[];
+  tarifs?: TarifSection[];
+  faq?: FaqItem[];
   prime?: string;
   cta: string;
   couleur: string;
@@ -41,8 +52,9 @@ const offres: Record<string, OffreData> = {
     categorie: "Compte Bancaire",
     titre: "Compte Personnel",
     sousTitre: "L'essentiel pour vos dépenses quotidiennes",
+    accroche: "À distance, mais jamais loin de vous",
     description:
-      "Le Compte Personnel NELLOA BANK est conçu pour vous offrir une gestion simple et efficace de vos finances du quotidien. Profitez d'un IBAN personnel, d'une carte virtuelle sécurisée et d'un suivi détaillé de vos dépenses — le tout depuis votre espace en ligne.",
+      "Loin des yeux, près de votre compte : vous gérez votre argent à distance, mais avec votre budget à portée de main. Chez vous ou à l'extérieur, depuis votre smartphone, votre tablette ou votre ordinateur, votre compte NELLOA BANK est toujours près de vous. Suivi de votre budget, alertes SMS, catégorisation des dépenses… des outils simples et pratiques pour gérer votre argent et mettre de côté pour vos projets.",
     avantages: [
       "IBAN personnel dédié",
       "Carte virtuelle Visa incluse",
@@ -51,17 +63,73 @@ const offres: Record<string, OffreData> = {
       "Application mobile intuitive",
       "Notifications instantanées",
     ],
+    avantagesCards: [
+      { titre: "Offre de bienvenue", desc: "Profitez d'une carte Visa Gratuite et de 90 € offerts à l'ouverture de votre compte.", Icon: Gift },
+      { titre: "Assistance clientèle", desc: "Un conseiller vous est dédié pendant et après l'ouverture de votre compte.", Icon: Headphones },
+      { titre: "Sécurité maximale", desc: "Nos standards de cryptage vous assurent une sécurité maximale sur toutes vos transactions.", Icon: ShieldCheck },
+      { titre: "Engagement qualité", desc: "Nous nous engageons à une prise en charge de toutes vos demandes sous 48 h.", Icon: Clock },
+    ],
     conditions: [
-      "Être majeur et résident",
+      "Être majeur et résident en France ou à l'étranger",
       "Pièce d'identité valide",
-      "Pas de revenus minimum requis",
+      "Revenus minimum de 800 € / mois",
+    ],
+    eligibiliteDetail: [
+      { titre: "Pour qui ?", desc: "Toute personne physique, majeure, résidant en France ou non, agissant en tant que particulier ou entrepreneur individuel à titre privé." },
+      { titre: "Dépôt d'ouverture", desc: "Montant minimum de 1 € de dépôt initial, payé par virement en provenance d'un compte à votre nom ou par un autre moyen de transfert. Cette somme est disponible sur votre compte dès l'ouverture effective." },
+      { titre: "Conditions de revenu", desc: "Nous exigeons un minimum de 800 € de revenus mensuels (compte courant) ou 1 000 € (compte joint). Aucune obligation de domiciliation de vos revenus chez nous." },
     ],
     steps: [
-      { titre: "Je remplis le formulaire", desc: "Indiquez vos informations personnelles en 2 minutes depuis n'importe quel appareil." },
-      { titre: "Je vérifie mon identité", desc: "Déposez une photo de votre pièce d'identité valide. Notre équipe valide votre dossier sous 24h." },
-      { titre: "J'accède à mon compte", desc: "Votre compte est activé, votre prime de 3 200 € est créditée et votre carte virtuelle est disponible immédiatement." },
+      { titre: "Remplissez le formulaire", desc: "Simple et rapide, quelques minutes suffisent pour remplir le formulaire en ligne depuis n'importe quel appareil." },
+      { titre: "Transmettez votre dossier", desc: "Téléchargez vos pièces justificatives (pièce d'identité, justificatif de revenus) pour l'étude de votre dossier." },
+      { titre: "Signez votre demande", desc: "Signez votre contrat électroniquement après avoir complété le formulaire de demande." },
+      { titre: "Activez votre compte", desc: "Effectuez votre premier versement et recevez votre carte Visa gratuite. Votre compte est opérationnel !" },
     ],
-    prime: "3 200 € offerts à l'ouverture",
+    tarifs: [
+      {
+        titre: "Cartes et services",
+        rows: [
+          { service: "Abonnement pour gérer ses comptes en ligne et sur les applications NELLOA BANK", prix: "Gratuit" },
+          { service: "Alertes SMS sur la situation du compte", prix: "Gratuit" },
+          { service: "Carte de paiement internationale à débit immédiat (Visa Classic)", prix: "Gratuit" },
+          { service: "Carte de paiement internationale à débit différé (Visa Classic)", prix: "Gratuit" },
+          { service: "Carte à autorisation systématique (Visa Premier)", prix: "Gratuit" },
+          { service: "Retrait en euros dans un DAB d'un autre établissement (zone euro)", prix: "Gratuit" },
+        ],
+      },
+      {
+        titre: "Virement",
+        rows: [
+          { service: "Virement unitaire par Internet (site ou applications mobile/tablette)", prix: "Gratuit" },
+          { service: "Virement unitaire par l'intermédiaire d'un conseiller", prix: "3,90 €" },
+        ],
+      },
+      {
+        titre: "Frais de prélèvement",
+        rows: [
+          { service: "Mise en place d'une autorisation de prélèvement", prix: "Gratuit" },
+          { service: "Frais par prélèvement", prix: "Gratuit" },
+          { service: "Commission d'intervention", prix: "Gratuit" },
+          { service: "Assurance perte ou vol des moyens de paiement", prix: "26,50 € / an" },
+          { service: "Frais de tenue de compte", prix: "1 €" },
+        ],
+      },
+    ],
+    faq: [
+      {
+        q: "Quelles sont les conditions pour ouvrir un compte bancaire ?",
+        a: "L'ouverture est soumise à acceptation. Vous devez être une personne physique, résidant en France ou non, majeure ; ouvrir un compte en tant que particulier ; et justifier de revenus minimum de 800 € / mois (compte courant) ou 1 000 € / mois (compte joint).",
+      },
+      {
+        q: "L'ouverture de compte est-elle payante ?",
+        a: "Non, l'ouverture d'un compte NELLOA BANK est entièrement gratuite. La plupart des opérations courantes depuis votre espace client sont également gratuites.",
+      },
+      {
+        q: "Quand et comment vais-je recevoir ma carte bancaire ?",
+        a: "Votre carte Visa virtuelle est disponible immédiatement après l'activation de votre compte. Une carte physique peut être commandée depuis votre espace client et vous sera livrée sous 3 à 5 jours ouvrés.",
+      },
+    ],
+    prime: "90 € offerts + Carte Visa gratuite",
     cta: "Ouvrir un Compte Personnel",
     couleur: "from-[#1E3A8A] to-[#3B82F6]",
     Icon: CreditCardIcon,
@@ -72,8 +140,9 @@ const offres: Record<string, OffreData> = {
     categorie: "Compte Bancaire",
     titre: "Compte Business",
     sousTitre: "La solution bancaire pour les professionnels et entrepreneurs",
+    accroche: "Votre activité mérite une banque à sa hauteur",
     description:
-      "Le Compte Business NELLOA BANK est taillé pour les indépendants, auto-entrepreneurs et PME qui souhaitent séparer leurs finances professionnelles et bénéficier d'outils dédiés à la gestion d'entreprise.",
+      "Le Compte Business NELLOA BANK est taillé pour les indépendants, auto-entrepreneurs et PME qui souhaitent séparer leurs finances professionnelles et bénéficier d'outils dédiés à la gestion d'entreprise. Gérez vos flux, effectuez des virements illimités et accédez à votre tableau de bord depuis n'importe quel appareil.",
     avantages: [
       "IBAN professionnel séparé",
       "Carte Business Mastercard",
@@ -82,17 +151,70 @@ const offres: Record<string, OffreData> = {
       "Tableau de bord comptable intégré",
       "Accès multi-utilisateurs",
     ],
+    avantagesCards: [
+      { titre: "Offre de bienvenue", desc: "Carte Business offerte et 90 € crédités à l'ouverture de votre compte professionnel.", Icon: Gift },
+      { titre: "Assistance clientèle", desc: "Un conseiller dédié vous accompagne à chaque étape, de l'ouverture à la gestion quotidienne.", Icon: Headphones },
+      { titre: "Sécurité maximale", desc: "Cryptage bancaire de niveau professionnel pour protéger toutes vos transactions.", Icon: ShieldCheck },
+      { titre: "Engagement qualité", desc: "Toutes vos demandes sont traitées sous 48 h par notre équipe dédiée aux professionnels.", Icon: Clock },
+    ],
     conditions: [
       "Être dirigeant ou auto-entrepreneur",
       "Extrait Kbis ou statuts de société",
       "Pièce d'identité du gérant",
     ],
-    steps: [
-      { titre: "Je crée mon dossier", desc: "Renseignez les informations de votre entreprise et vos coordonnées professionnelles en quelques minutes." },
-      { titre: "Je fournis mes justificatifs", desc: "Déposez votre Kbis ou statuts et une pièce d'identité. Traitement prioritaire pour les professionnels." },
-      { titre: "Je commence à gérer", desc: "Votre IBAN professionnel est actif, votre carte Business est expédiée et la prime est créditée sur votre solde." },
+    eligibiliteDetail: [
+      { titre: "Pour qui ?", desc: "Toute personne morale ou physique agissant en qualité d'entrepreneur individuel, gérant, auto-entrepreneur ou dirigeant d'une société enregistrée." },
+      { titre: "Dépôt d'ouverture", desc: "Dépôt minimum de 1 € pour activer le compte. Les fonds sont disponibles immédiatement après l'ouverture effective." },
+      { titre: "Conditions de revenu", desc: "Revenus professionnels minimum de 1 000 € / mois. Aucune obligation de domiciliation de vos flux chez NELLOA BANK." },
     ],
-    prime: "3 200 € offerts à l'ouverture",
+    steps: [
+      { titre: "Créez votre dossier", desc: "Renseignez les informations de votre entreprise et vos coordonnées professionnelles en quelques minutes." },
+      { titre: "Fournissez vos justificatifs", desc: "Déposez votre Kbis ou statuts et une pièce d'identité. Traitement prioritaire pour les professionnels." },
+      { titre: "Signez votre contrat", desc: "Signature électronique sécurisée de votre contrat d'ouverture en moins de 5 minutes." },
+      { titre: "Démarrez votre activité", desc: "Votre IBAN professionnel est actif, votre carte Business est en route et la prime est créditée." },
+    ],
+    tarifs: [
+      {
+        titre: "Cartes et services",
+        rows: [
+          { service: "Abonnement gestion en ligne et applications NELLOA BANK", prix: "Gratuit" },
+          { service: "Alertes SMS sur la situation du compte", prix: "Gratuit" },
+          { service: "Carte Business Mastercard internationale", prix: "Gratuit" },
+          { service: "Retrait DAB zone euro", prix: "Gratuit" },
+        ],
+      },
+      {
+        titre: "Virement",
+        rows: [
+          { service: "Virement unitaire par Internet (site ou applications)", prix: "Gratuit" },
+          { service: "Virement unitaire via conseiller", prix: "3,90 €" },
+          { service: "Virement international SWIFT", prix: "4,90 €" },
+        ],
+      },
+      {
+        titre: "Autres frais",
+        rows: [
+          { service: "Mise en place d'une autorisation de prélèvement", prix: "Gratuit" },
+          { service: "Commission d'intervention", prix: "Gratuit" },
+          { service: "Frais de tenue de compte", prix: "1 €" },
+        ],
+      },
+    ],
+    faq: [
+      {
+        q: "Quelles sont les conditions pour ouvrir un compte Business ?",
+        a: "Vous devez être dirigeant, auto-entrepreneur ou représentant légal d'une société. Un Kbis ou des statuts, ainsi qu'une pièce d'identité du gérant sont requis. L'ouverture est soumise à acceptation par NELLOA BANK.",
+      },
+      {
+        q: "L'ouverture de compte Business est-elle payante ?",
+        a: "Non, l'ouverture est entièrement gratuite. La plupart des opérations courantes depuis votre espace client professionnel sont également gratuites.",
+      },
+      {
+        q: "Puis-je avoir plusieurs utilisateurs sur mon compte Business ?",
+        a: "Oui, le compte Business NELLOA BANK permet l'accès multi-utilisateurs avec des niveaux de droits paramétrables depuis votre tableau de bord.",
+      },
+    ],
+    prime: "90 € offerts + Carte Business gratuite",
     cta: "Ouvrir un Compte Business",
     couleur: "from-[#1E3A8A] to-[#0EA5E9]",
     Icon: BuildingOffice2Icon,
@@ -281,6 +403,35 @@ const offres: Record<string, OffreData> = {
   },
 };
 
+function FaqItem({ item }: { item: FaqItem }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="border border-border rounded-xl overflow-hidden">
+      <button
+        className="w-full flex items-center justify-between p-5 text-left font-semibold text-foreground hover:bg-slate-50 transition-colors"
+        onClick={() => setOpen(v => !v)}
+      >
+        <span>{item.q}</span>
+        <ChevronDown className={`h-5 w-5 text-muted-foreground shrink-0 ml-4 transition-transform duration-200 ${open ? "rotate-180" : ""}`} />
+      </button>
+      <AnimatePresence initial={false}>
+        {open && (
+          <motion.div
+            key="content"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.25, ease: "easeInOut" }}
+            className="overflow-hidden"
+          >
+            <p className="px-5 pb-5 text-sm text-muted-foreground leading-relaxed border-t border-border pt-4">{item.a}</p>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
 export function OffrePage({ slug }: { slug: string }) {
   const offre = offres[slug];
 
@@ -331,6 +482,9 @@ export function OffrePage({ slug }: { slug: string }) {
             <h1 className="text-4xl md:text-5xl font-bold text-white">{offre.titre}</h1>
           </div>
           <p className="text-xl text-white/90 max-w-2xl">{offre.sousTitre}</p>
+          {offre.accroche && (
+            <p className="text-white/70 mt-3 italic text-lg">{offre.accroche}</p>
+          )}
           {offre.prime && (
             <div className="mt-6 inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm text-white font-semibold px-4 py-2 rounded-full text-sm">
               <GiftIcon className="h-4 w-4" />
@@ -340,17 +494,20 @@ export function OffrePage({ slug }: { slug: string }) {
         </div>
       </section>
 
-      {/* ── CONTENT ── */}
+      {/* ── MAIN CONTENT ── */}
       <div className="container mx-auto max-w-5xl px-4 py-16 flex-1">
         <div className="grid lg:grid-cols-3 gap-12">
 
           {/* LEFT */}
           <div className="lg:col-span-2 space-y-12">
+
+            {/* Description */}
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
               <h2 className="text-2xl font-bold text-foreground mb-4">À propos de ce produit</h2>
               <p className="text-muted-foreground leading-relaxed text-base">{offre.description}</p>
             </motion.div>
 
+            {/* Inclus */}
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.1 }}>
               <h2 className="text-2xl font-bold text-foreground mb-6">Ce qui est inclus</h2>
               <ul className="grid sm:grid-cols-2 gap-4">
@@ -363,17 +520,68 @@ export function OffrePage({ slug }: { slug: string }) {
               </ul>
             </motion.div>
 
+            {/* Tarifs */}
+            {offre.tarifs && (
+              <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.15 }}>
+                <h2 className="text-2xl font-bold text-foreground mb-2">Nos tarifs</h2>
+                <p className="text-muted-foreground text-sm mb-6">La plupart des opérations courantes depuis votre espace client sont gratuites.</p>
+                <div className="space-y-6">
+                  {offre.tarifs.map((section) => (
+                    <div key={section.titre} className="border border-border rounded-xl overflow-hidden">
+                      <div className={`bg-gradient-to-r ${offre.couleur} px-5 py-3`}>
+                        <h3 className="font-semibold text-white text-sm">{section.titre}</h3>
+                      </div>
+                      <table className="w-full text-sm">
+                        <tbody className="divide-y divide-border">
+                          {section.rows.map((row, i) => (
+                            <tr key={i} className={i % 2 === 0 ? "bg-white" : "bg-slate-50/50"}>
+                              <td className="px-5 py-3 text-muted-foreground leading-snug">{row.service}</td>
+                              <td className={`px-5 py-3 text-right font-semibold whitespace-nowrap ${row.prix === "Gratuit" ? "text-green-600" : "text-foreground"}`}>{row.prix}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+            )}
+
+            {/* Éligibilité */}
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.2 }}>
               <h2 className="text-2xl font-bold text-foreground mb-4">Conditions d'éligibilité</h2>
-              <ul className="space-y-3">
-                {offre.conditions.map((c) => (
-                  <li key={c} className="flex items-center gap-3 text-sm text-muted-foreground">
-                    <span className="h-1.5 w-1.5 rounded-full bg-primary shrink-0" />
-                    {c}
-                  </li>
-                ))}
-              </ul>
+              {offre.eligibiliteDetail ? (
+                <div className="space-y-4">
+                  {offre.eligibiliteDetail.map((item) => (
+                    <div key={item.titre} className="p-5 bg-slate-50 border border-border rounded-xl">
+                      <p className="font-semibold text-foreground mb-1">{item.titre}</p>
+                      <p className="text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <ul className="space-y-3">
+                  {offre.conditions.map((c) => (
+                    <li key={c} className="flex items-center gap-3 text-sm text-muted-foreground">
+                      <span className="h-1.5 w-1.5 rounded-full bg-primary shrink-0" />
+                      {c}
+                    </li>
+                  ))}
+                </ul>
+              )}
             </motion.div>
+
+            {/* FAQ */}
+            {offre.faq && (
+              <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.25 }}>
+                <h2 className="text-2xl font-bold text-foreground mb-6">Questions fréquentes</h2>
+                <div className="space-y-3">
+                  {offre.faq.map((item) => (
+                    <FaqItem key={item.q} item={item} />
+                  ))}
+                </div>
+              </motion.div>
+            )}
           </div>
 
           {/* RIGHT — sticky CTA card */}
@@ -403,7 +611,7 @@ export function OffrePage({ slug }: { slug: string }) {
               <p className="text-xs text-muted-foreground text-center mt-4">Sans engagement — ouverture gratuite</p>
               <div className="mt-6 pt-6 border-t border-border">
                 <p className="text-xs font-semibold text-muted-foreground mb-3">Vous avez des questions ?</p>
-                <a href="#" className="text-sm text-primary hover:underline">Contacter un conseiller →</a>
+                <a href="mailto:contact@nelloa-bank.com" className="text-sm text-primary hover:underline">Contacter un conseiller →</a>
               </div>
             </div>
           </div>
@@ -415,11 +623,16 @@ export function OffrePage({ slug }: { slug: string }) {
         <div className="container mx-auto max-w-5xl px-4">
           <div className="text-center mb-14">
             <p className="text-sm font-semibold text-secondary uppercase tracking-widest mb-3">Simple et rapide</p>
-            <h2 className="text-3xl font-bold text-foreground">Comment ça marche ?</h2>
+            <h2 className="text-3xl font-bold text-foreground">Comment ouvrir un compte NELLOA BANK ?</h2>
+            {offre.prime && (
+              <p className="text-muted-foreground mt-3">Bénéficiez de <span className="font-semibold text-foreground">{offre.prime}</span>.</p>
+            )}
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8 relative">
-            <div className="hidden md:block absolute top-8 left-[calc(16.66%+1rem)] right-[calc(16.66%+1rem)] h-0.5 bg-border z-0" />
+          <div className={`grid md:grid-cols-${offre.steps.length} gap-8 relative`}>
+            {offre.steps.length > 1 && (
+              <div className="hidden md:block absolute top-8 left-[calc(16.66%+1rem)] right-[calc(16.66%+1rem)] h-0.5 bg-border z-0" />
+            )}
             {offre.steps.map((step, i) => (
               <motion.div
                 key={step.titre}
@@ -440,6 +653,36 @@ export function OffrePage({ slug }: { slug: string }) {
           </div>
         </div>
       </section>
+
+      {/* ── AVANTAGES CARDS ── */}
+      {offre.avantagesCards && (
+        <section className="py-20 bg-white border-t border-border">
+          <div className="container mx-auto max-w-5xl px-4">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-bold text-foreground">Profitez des avantages de votre compte</h2>
+              <p className="text-muted-foreground mt-3 max-w-xl mx-auto">NELLOA BANK vous offre plusieurs avantages dès l'ouverture de votre compte bancaire en ligne.</p>
+            </div>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {offre.avantagesCards.map((card) => (
+                <motion.div
+                  key={card.titre}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4 }}
+                  className="flex flex-col items-center text-center p-6 bg-slate-50 border border-border rounded-2xl hover:shadow-md transition-shadow"
+                >
+                  <div className={`h-12 w-12 rounded-xl bg-gradient-to-br ${offre.couleur} flex items-center justify-center mb-4`}>
+                    <card.Icon className="h-6 w-6 text-white" />
+                  </div>
+                  <h3 className="font-bold text-foreground mb-2">{card.titre}</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{card.desc}</p>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* ── CTA BANNER ── */}
       <section className={`py-20 px-4 bg-gradient-to-br ${offre.couleur}`}>
