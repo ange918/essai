@@ -225,8 +225,9 @@ const offres: Record<string, OffreData> = {
     categorie: "Compte Bancaire",
     titre: "Carte Bancaire",
     sousTitre: "Une carte pour payer partout, en toute sécurité",
+    accroche: "Payez en ligne, en magasin ou à l'étranger, sans limites",
     description:
-      "La carte NELLOA BANK vous accompagne dans toutes vos transactions, en ligne comme en magasin. Choisissez entre notre carte virtuelle gratuite ou notre carte physique Gold internationale, acceptée dans plus de 150 pays.",
+      "La carte NELLOA BANK vous accompagne dans toutes vos transactions, en ligne comme en magasin. Choisissez entre notre carte virtuelle gratuite disponible immédiatement ou notre carte physique Gold internationale, acceptée dans plus de 150 pays. Blocage instantané, alertes en temps réel, cashback — tout est conçu pour vous simplifier la vie.",
     avantages: [
       "Carte virtuelle disponible immédiatement",
       "Carte physique Gold internationale",
@@ -235,14 +236,62 @@ const offres: Record<string, OffreData> = {
       "Blocage/déblocage instantané",
       "Assurance voyage incluse",
     ],
+    avantagesCards: [
+      { titre: "Offre de bienvenue", desc: "Carte Visa offerte à l'ouverture de votre compte, sans frais cachés ni abonnement.", Icon: Gift },
+      { titre: "Assistance clientèle", desc: "Un conseiller disponible pour répondre à toutes vos questions sur votre carte.", Icon: Headphones },
+      { titre: "Sécurité maximale", desc: "Authentification 3D Secure et alertes SMS pour chaque transaction suspecte.", Icon: ShieldCheck },
+      { titre: "Engagement qualité", desc: "Opposition et remplacement de carte pris en charge sous 48 h.", Icon: Clock },
+    ],
     conditions: [
       "Être titulaire d'un compte NELLOA BANK",
       "Vérification d'identité complétée",
     ],
+    eligibiliteDetail: [
+      { titre: "Pour qui ?", desc: "Tout titulaire d'un compte NELLOA BANK (Personnel, Business ou Premium). La carte est incluse automatiquement à l'ouverture." },
+      { titre: "Carte virtuelle", desc: "Disponible immédiatement après validation de votre dossier KYC. Utilisable partout où Visa est accepté." },
+      { titre: "Carte physique Gold", desc: "Commandable depuis votre espace client. Livraison sous 3 à 5 jours ouvrés, gratuite." },
+    ],
     steps: [
       { titre: "J'ouvre mon compte", desc: "La carte est incluse à l'ouverture de tout compte NELLOA BANK. Remplissez le formulaire en ligne." },
-      { titre: "Je choisis ma carte", desc: "Sélectionnez la carte virtuelle (disponible immédiatement) ou la carte Gold physique (livrée sous 3 jours ouvrés)." },
+      { titre: "Je choisis ma carte", desc: "Sélectionnez la carte virtuelle (disponible immédiatement) ou la carte Gold physique (livrée sous 3–5 jours ouvrés)." },
+      { titre: "Je l'active", desc: "Activation en un clic depuis votre espace client ou l'application mobile." },
       { titre: "Je paye partout", desc: "Votre carte est active. Utilisez-la en ligne, en magasin et dans le monde entier dès réception." },
+    ],
+    tarifs: [
+      {
+        titre: "Carte et services associés",
+        rows: [
+          { service: "Carte virtuelle Visa (disponible immédiatement)", prix: "Gratuit" },
+          { service: "Carte physique Gold internationale", prix: "Gratuit" },
+          { service: "Remplacement de carte perdue ou volée", prix: "Gratuit" },
+          { service: "Paiements sans contact en euros", prix: "Gratuit" },
+          { service: "Retrait DAB zone euro", prix: "Gratuit" },
+          { service: "Retrait DAB hors zone euro", prix: "1,50 €" },
+          { service: "Assurance perte ou vol des moyens de paiement", prix: "26,50 € / an" },
+        ],
+      },
+      {
+        titre: "Options premium",
+        rows: [
+          { service: "Cashback sur achats (compte Premium)", prix: "2 %" },
+          { service: "Assurance voyage incluse (compte Premium)", prix: "Incluse" },
+          { service: "Plafond de paiement relevé sur demande", prix: "Gratuit" },
+        ],
+      },
+    ],
+    faq: [
+      {
+        q: "Combien de temps pour recevoir ma carte physique ?",
+        a: "Votre carte physique Gold est expédiée sous 24 h ouvrées après commande depuis votre espace client. Elle arrive en 3 à 5 jours ouvrés. La carte virtuelle, elle, est disponible instantanément.",
+      },
+      {
+        q: "Que faire en cas de perte ou vol de ma carte ?",
+        a: "Bloquez votre carte en un clic depuis l'application ou l'espace client, à toute heure. Signalez ensuite l'incident à votre conseiller pour un remplacement gratuit sous 48 h.",
+      },
+      {
+        q: "Le cashback est-il disponible sur tous les comptes ?",
+        a: "Le cashback de 2 % est réservé aux titulaires d'un compte Premium NELLOA BANK. Les comptes Personnel et Business bénéficient des autres avantages carte.",
+      },
     ],
     prime: "Carte offerte à l'ouverture",
     cta: "Obtenir ma carte",
@@ -255,15 +304,22 @@ const offres: Record<string, OffreData> = {
     categorie: "Crédit Bancaire",
     titre: "Prêt Immobilier",
     sousTitre: "Financez votre projet immobilier aux meilleures conditions",
+    accroche: "Votre résidence principale, secondaire ou locative à portée de main",
     description:
-      "NELLOA BANK vous accompagne dans l'acquisition de votre résidence principale, secondaire ou d'un bien locatif. Nos conseillers analysent votre dossier et vous proposent un taux compétitif adapté à votre profil.",
+      "NELLOA BANK vous accompagne dans l'acquisition de votre résidence principale, secondaire ou d'un bien locatif. Nos conseillers analysent votre dossier et vous proposent un taux compétitif adapté à votre profil. Réponse de principe sous 48 h, signature électronique et déblocage des fonds directement chez le notaire.",
     avantages: [
       "Taux fixe dès 2,8 % annuel",
       "Durée jusqu'à 25 ans",
       "Jusqu'à 500 000 € financés",
-      "Réponse de principe sous 48h",
+      "Réponse de principe sous 48 h",
       "Assurance emprunteur intégrée",
       "Modulation des mensualités possible",
+    ],
+    avantagesCards: [
+      { titre: "Taux compétitif", desc: "Des taux fixes parmi les plus bas du marché, négociés pour chaque profil emprunteur.", Icon: Gift },
+      { titre: "Conseiller dédié", desc: "Un expert immobilier vous accompagne de la simulation au déblocage des fonds.", Icon: Headphones },
+      { titre: "Dossier sécurisé", desc: "Vos documents sont transmis et traités dans un environnement entièrement chiffré.", Icon: ShieldCheck },
+      { titre: "Réponse rapide", desc: "Réponse de principe sous 48 h après réception de votre dossier complet.", Icon: Clock },
     ],
     conditions: [
       "Revenus stables justifiés",
@@ -271,10 +327,43 @@ const offres: Record<string, OffreData> = {
       "Taux d'endettement inférieur à 35 %",
       "Pièces d'identité et justificatifs de revenus",
     ],
+    eligibiliteDetail: [
+      { titre: "Pour qui ?", desc: "Toute personne physique majeure, salariée, indépendante ou retraitée, souhaitant financer l'achat d'un bien immobilier à usage résidentiel ou locatif." },
+      { titre: "Apport & endettement", desc: "Un apport personnel de 10 % est recommandé. Le taux d'endettement global ne doit pas dépasser 35 % de vos revenus nets mensuels." },
+      { titre: "Justificatifs requis", desc: "Pièce d'identité, 3 derniers bulletins de salaire (ou bilan pour indépendants), relevés bancaires des 3 derniers mois, compromis de vente ou promesse d'achat." },
+    ],
     steps: [
       { titre: "Je simule mon prêt", desc: "Indiquez le montant, la durée souhaitée et vos revenus. Obtenez une estimation de vos mensualités en temps réel." },
-      { titre: "Je dépose mon dossier", desc: "Transmettez vos justificatifs (revenus, identité, compromis de vente). Un conseiller analyse votre demande sous 48h." },
-      { titre: "Je signe et je finance", desc: "Offre de prêt validée, signature électronique, déblocage des fonds directement chez le notaire ou le vendeur." },
+      { titre: "Je dépose mon dossier", desc: "Transmettez vos justificatifs (revenus, identité, compromis de vente). Un conseiller analyse votre demande sous 48 h." },
+      { titre: "Je reçois l'offre", desc: "Votre offre de prêt personnalisée est émise. Vous disposez de 10 jours de réflexion avant signature." },
+      { titre: "Je signe et je finance", desc: "Signature électronique, déblocage des fonds directement chez le notaire ou le vendeur." },
+    ],
+    tarifs: [
+      {
+        titre: "Frais liés au prêt immobilier",
+        rows: [
+          { service: "Frais de dossier", prix: "Gratuit" },
+          { service: "Taux fixe annuel (selon profil)", prix: "Dès 2,8 %" },
+          { service: "Assurance emprunteur (décès / invalidité)", prix: "Incluse" },
+          { service: "Remboursement anticipé total ou partiel", prix: "Gratuit" },
+          { service: "Modulation des mensualités", prix: "Gratuit" },
+          { service: "Frais de garantie (hypothèque ou caution)", prix: "Selon notaire" },
+        ],
+      },
+    ],
+    faq: [
+      {
+        q: "Quel montant puis-je emprunter ?",
+        a: "NELLOA BANK finance jusqu'à 500 000 € sur une durée maximale de 25 ans, sous réserve que votre taux d'endettement n'excède pas 35 % de vos revenus nets mensuels.",
+      },
+      {
+        q: "Dois-je avoir un apport personnel ?",
+        a: "Un apport de 10 % est recommandé pour couvrir les frais de notaire et de garantie. Cependant, des dossiers sans apport peuvent être étudiés au cas par cas selon votre profil.",
+      },
+      {
+        q: "Combien de temps prend l'étude de mon dossier ?",
+        a: "Une réponse de principe vous est communiquée sous 48 h après réception de votre dossier complet. L'offre officielle de prêt est ensuite émise dans les 7 jours.",
+      },
     ],
     cta: "Simuler mon prêt immobilier",
     couleur: "from-[#065F46] to-[#059669]",
@@ -286,25 +375,64 @@ const offres: Record<string, OffreData> = {
     categorie: "Crédit Bancaire",
     titre: "Prêt Personnel",
     sousTitre: "Un financement flexible pour tous vos projets",
+    accroche: "Voyages, travaux, mariage, auto… Financez vos projets sans justificatif",
     description:
-      "Voyages, travaux, mariage, électroménager... Le prêt personnel NELLOA BANK vous donne accès aux fonds dont vous avez besoin rapidement, sans justificatif d'utilisation, avec des mensualités fixes et prévisibles.",
+      "Le prêt personnel NELLOA BANK vous donne accès aux fonds dont vous avez besoin rapidement, sans justificatif d'utilisation. Des mensualités fixes et prévisibles, aucun frais de dossier, et un remboursement anticipé toujours gratuit. Réponse immédiate en ligne, fonds disponibles sous 24 h.",
     avantages: [
       "De 500 € à 75 000 €",
       "Durée de 12 à 84 mois",
       "Taux fixe sans surprise",
-      "Fonds disponibles sous 24h",
+      "Fonds disponibles sous 24 h",
       "Pas de frais de dossier",
       "Remboursement anticipé gratuit",
+    ],
+    avantagesCards: [
+      { titre: "Sans justificatif", desc: "Aucune obligation de préciser l'utilisation des fonds. Vous êtes libre de financer ce que vous souhaitez.", Icon: Gift },
+      { titre: "Conseiller dédié", desc: "Un conseiller vous accompagne pour choisir le montant et la durée adaptés à votre budget.", Icon: Headphones },
+      { titre: "100 % sécurisé", desc: "Signature électronique et transmission de documents entièrement chiffrés.", Icon: ShieldCheck },
+      { titre: "Réponse immédiate", desc: "Réponse de principe instantanée en ligne. Fonds virés sous 24 h après validation.", Icon: Clock },
     ],
     conditions: [
       "Être majeur et résident",
       "Justificatif de revenus réguliers",
       "Taux d'endettement inférieur à 33 %",
     ],
+    eligibiliteDetail: [
+      { titre: "Pour qui ?", desc: "Toute personne physique majeure disposant de revenus réguliers (salarié, indépendant, retraité). Résidence en France ou à l'étranger acceptée." },
+      { titre: "Capacité d'emprunt", desc: "Le montant accordé dépend de vos revenus et de votre taux d'endettement, qui ne doit pas dépasser 33 % de vos revenus nets mensuels." },
+      { titre: "Justificatifs requis", desc: "Pièce d'identité valide, 3 derniers bulletins de salaire ou avis d'imposition, relevé bancaire du dernier mois." },
+    ],
     steps: [
       { titre: "Je simule en ligne", desc: "Choisissez le montant et la durée. Le simulateur affiche vos mensualités et le coût total instantanément." },
       { titre: "Je soumets ma demande", desc: "Remplissez le formulaire et joignez vos justificatifs de revenus. Réponse de principe immédiate en ligne." },
-      { titre: "Je reçois les fonds", desc: "Après validation, les fonds sont virés sur votre compte NELLOA BANK sous 24h. Utilisez-les librement." },
+      { titre: "Je signe mon contrat", desc: "Signature électronique sécurisée de votre contrat de prêt en quelques clics." },
+      { titre: "Je reçois les fonds", desc: "Après validation, les fonds sont virés sur votre compte NELLOA BANK sous 24 h. Utilisez-les librement." },
+    ],
+    tarifs: [
+      {
+        titre: "Frais liés au prêt personnel",
+        rows: [
+          { service: "Frais de dossier", prix: "Gratuit" },
+          { service: "Taux annuel effectif global (TAEG, selon profil)", prix: "Dès 3,5 %" },
+          { service: "Remboursement anticipé total ou partiel", prix: "Gratuit" },
+          { service: "Assurance décès / invalidité (optionnelle)", prix: "Sur devis" },
+          { service: "Modification du montant des mensualités", prix: "Gratuit" },
+        ],
+      },
+    ],
+    faq: [
+      {
+        q: "Dois-je justifier l'utilisation des fonds ?",
+        a: "Non. Le prêt personnel NELLOA BANK ne requiert aucun justificatif quant à l'utilisation des fonds. Vous êtes entièrement libre de les affecter selon vos besoins.",
+      },
+      {
+        q: "Quel est le délai pour recevoir les fonds ?",
+        a: "Après signature de votre contrat et expiration du délai légal de rétractation de 14 jours, les fonds sont virés sur votre compte dans les 24 heures.",
+      },
+      {
+        q: "Puis-je rembourser mon prêt par anticipation ?",
+        a: "Oui, à tout moment et sans frais. Vous pouvez effectuer un remboursement partiel ou total depuis votre espace client.",
+      },
     ],
     cta: "Demander mon prêt personnel",
     couleur: "from-[#1E3A8A] to-[#3B82F6]",
@@ -316,8 +444,9 @@ const offres: Record<string, OffreData> = {
     categorie: "Crédit Bancaire",
     titre: "Prêt Auto",
     sousTitre: "Roulez maintenant, payez sereinement",
+    accroche: "Véhicule neuf, occasion ou deux-roues — financement en 24 h",
     description:
-      "Que ce soit pour l'achat d'un véhicule neuf, d'occasion ou d'un deux-roues, le prêt auto NELLOA BANK vous offre un financement rapide avec des conditions avantageuses. Notre simulateur en ligne vous donne une réponse immédiate.",
+      "Le prêt auto NELLOA BANK vous offre un financement rapide avec des conditions avantageuses, quel que soit le véhicule. Réponse immédiate en ligne, taux préférentiel pour les véhicules électriques et fonds débloqués directement auprès du vendeur ou du concessionnaire.",
     avantages: [
       "Financement jusqu'à 80 000 €",
       "Durée de 12 à 72 mois",
@@ -326,15 +455,53 @@ const offres: Record<string, OffreData> = {
       "Réponse immédiate en ligne",
       "Achat chez n'importe quel concessionnaire",
     ],
+    avantagesCards: [
+      { titre: "Taux préférentiel", desc: "Taux réduit pour les véhicules électriques et hybrides rechargeables, pour rouler vert au meilleur prix.", Icon: Gift },
+      { titre: "Conseiller dédié", desc: "Un expert financement véhicule vous accompagne du choix de l'offre à la livraison des clés.", Icon: Headphones },
+      { titre: "Dossier sécurisé", desc: "Transmission de vos documents dans un environnement entièrement chiffré et confidentiel.", Icon: ShieldCheck },
+      { titre: "Déblocage rapide", desc: "Fonds débloqués directement auprès du concessionnaire ou du vendeur sous 24 h.", Icon: Clock },
+    ],
     conditions: [
       "Être majeur et titulaire du permis B",
       "Justificatif de revenus",
       "Facture ou bon de commande du véhicule",
     ],
+    eligibiliteDetail: [
+      { titre: "Pour qui ?", desc: "Toute personne physique majeure, titulaire du permis B, souhaitant financer l'achat d'un véhicule neuf, d'occasion, d'un deux-roues ou d'un utilitaire léger." },
+      { titre: "Documents du véhicule", desc: "Facture pro forma, bon de commande ou annonce de vente du véhicule obligatoire pour le déblocage des fonds." },
+      { titre: "Justificatifs requis", desc: "Pièce d'identité valide, permis de conduire, 3 derniers bulletins de salaire ou avis d'imposition." },
+    ],
     steps: [
       { titre: "Je simule mon financement", desc: "Renseignez le prix du véhicule, votre apport et la durée souhaitée. Résultat immédiat en ligne." },
       { titre: "Je transmets mon dossier", desc: "Joignez la facture ou le bon de commande du véhicule, votre permis et vos justificatifs de revenus." },
+      { titre: "Je signe mon contrat", desc: "Signature électronique sécurisée de votre contrat de financement auto." },
       { titre: "Je prends le volant", desc: "Accord validé, les fonds sont débloqués directement auprès du vendeur ou du concessionnaire. Bonne route !" },
+    ],
+    tarifs: [
+      {
+        titre: "Frais liés au prêt auto",
+        rows: [
+          { service: "Frais de dossier", prix: "Gratuit" },
+          { service: "TAEG (selon profil et véhicule)", prix: "Dès 2,9 %" },
+          { service: "Taux préférentiel véhicule électrique / hybride", prix: "Dès 1,9 %" },
+          { service: "Remboursement anticipé total ou partiel", prix: "Gratuit" },
+          { service: "Assurance auto (optionnelle)", prix: "Sur devis" },
+        ],
+      },
+    ],
+    faq: [
+      {
+        q: "Puis-je acheter chez n'importe quel concessionnaire ?",
+        a: "Oui. Le prêt auto NELLOA BANK est valable chez tout concessionnaire ou vendeur particulier en France et en Europe. Les fonds sont débloqués directement auprès du vendeur.",
+      },
+      {
+        q: "Y a-t-il un taux spécial pour les véhicules électriques ?",
+        a: "Oui. Les véhicules 100 % électriques et hybrides rechargeables bénéficient d'un taux préférentiel dès 1,9 % TAEG, sous réserve d'acceptation du dossier.",
+      },
+      {
+        q: "Dois-je apporter une contribution personnelle ?",
+        a: "Aucun apport n'est obligatoire. NELLOA BANK peut financer jusqu'à 100 % du prix du véhicule, selon votre profil et votre capacité d'emprunt.",
+      },
     ],
     cta: "Financer mon véhicule",
     couleur: "from-[#7C2D12] to-[#EA580C]",
@@ -346,8 +513,9 @@ const offres: Record<string, OffreData> = {
     categorie: "Assurance Partenaire",
     titre: "Assurance Vie",
     sousTitre: "Préparez l'avenir et protégez vos proches",
+    accroche: "Épargnez, valorisez et transmettez — avec une fiscalité imbattable",
     description:
-      "L'assurance vie NELLOA BANK est un placement à long terme qui combine protection de vos bénéficiaires et valorisation de votre épargne. Bénéficiez d'une fiscalité avantageuse et d'un capital garanti.",
+      "L'assurance vie NELLOA BANK est un placement à long terme qui combine protection de vos bénéficiaires et valorisation de votre épargne. Capital garanti sur fonds euros, fiscalité avantageuse dès 8 ans, versements libres ou programmés, transmission hors succession — un produit complet pour préparer sereinement votre avenir.",
     avantages: [
       "Capital garanti fonds euros",
       "Fiscalité avantageuse après 8 ans",
@@ -356,15 +524,54 @@ const offres: Record<string, OffreData> = {
       "Désignation libre des bénéficiaires",
       "Rachat partiel à tout moment",
     ],
+    avantagesCards: [
+      { titre: "Fiscalité optimisée", desc: "Après 8 ans, profitez d'un abattement annuel de 4 600 € (9 200 € pour un couple) sur vos gains.", Icon: Gift },
+      { titre: "Conseiller patrimonial", desc: "Un conseiller NELLOA BANK vous aide à définir votre profil d'investisseur et à choisir les bons supports.", Icon: Headphones },
+      { titre: "Capital sécurisé", desc: "Fonds euros à capital garanti, disponibles à tout moment via rachat partiel ou total.", Icon: ShieldCheck },
+      { titre: "Souscription rapide", desc: "Contrat ouvert et actif en moins de 48 h après validation de votre dossier.", Icon: Clock },
+    ],
     conditions: [
       "Être majeur",
       "Versement initial minimum : 500 €",
       "Questionnaire de santé simplifié",
     ],
+    eligibiliteDetail: [
+      { titre: "Pour qui ?", desc: "Toute personne physique majeure souhaitant constituer une épargne à long terme, préparer sa retraite ou organiser la transmission de son patrimoine." },
+      { titre: "Versement initial", desc: "Minimum 500 € à l'ouverture. Les versements ultérieurs sont libres (à partir de 50 €) ou programmés selon la périodicité de votre choix." },
+      { titre: "Questionnaire de santé", desc: "Un questionnaire de santé simplifié est requis pour les garanties complémentaires (prévoyance). Il ne conditionne pas l'ouverture du contrat épargne." },
+    ],
     steps: [
-      { titre: "Je choisis mon contrat", desc: "Sélectionnez votre profil d'investisseur (prudent, équilibré, dynamique) et le montant de votre premier versement." },
-      { titre: "Je complète mon dossier", desc: "Renseignez vos bénéficiaires et répondez au questionnaire de santé simplifié. Signature électronique en 5 minutes." },
-      { titre: "Mon épargne fructifie", desc: "Votre contrat est ouvert. Effectuez des versements à tout moment et suivez la performance depuis votre espace." },
+      { titre: "Je choisis mon profil", desc: "Sélectionnez votre profil d'investisseur (prudent, équilibré, dynamique) et le montant de votre premier versement." },
+      { titre: "Je désigne mes bénéficiaires", desc: "Renseignez librement les bénéficiaires de votre contrat (conjoint, enfants, tiers)." },
+      { titre: "Je signe mon contrat", desc: "Signature électronique sécurisée en 5 minutes. Votre contrat est actif sous 48 h." },
+      { titre: "Mon épargne fructifie", desc: "Effectuez des versements à tout moment et suivez la performance depuis votre espace client." },
+    ],
+    tarifs: [
+      {
+        titre: "Frais liés à l'assurance vie",
+        rows: [
+          { service: "Frais d'entrée / ouverture", prix: "Gratuit" },
+          { service: "Frais de gestion annuels (fonds euros)", prix: "0,60 %" },
+          { service: "Frais de gestion annuels (unités de compte)", prix: "0,85 %" },
+          { service: "Frais sur versements complémentaires", prix: "Gratuit" },
+          { service: "Frais de rachat partiel ou total", prix: "Gratuit" },
+          { service: "Arbitrages entre supports", prix: "2 gratuits / an, puis 0,50 % " },
+        ],
+      },
+    ],
+    faq: [
+      {
+        q: "Puis-je récupérer mon argent à tout moment ?",
+        a: "Oui. L'assurance vie n'est pas bloquée. Vous pouvez effectuer un rachat partiel ou total à tout moment. Fiscalement, il est conseillé d'attendre 8 ans pour bénéficier des abattements.",
+      },
+      {
+        q: "Quelle est la fiscalité de l'assurance vie ?",
+        a: "Avant 8 ans : imposition des gains au PFU (30 %) ou au barème IR. Après 8 ans : abattement annuel de 4 600 € (9 200 € en couple) sur les gains, puis 7,5 % de prélèvement forfaitaire.",
+      },
+      {
+        q: "La transmission aux bénéficiaires est-elle taxée ?",
+        a: "Les capitaux transmis au décès bénéficient d'un abattement de 152 500 € par bénéficiaire (pour les versements effectués avant 70 ans), puis taxation à 20 % — bien plus avantageux que les droits de succession classiques.",
+      },
     ],
     cta: "Souscrire une assurance vie",
     couleur: "from-[#1E3A8A] to-[#6D28D9]",
@@ -376,8 +583,9 @@ const offres: Record<string, OffreData> = {
     categorie: "Assurance Partenaire",
     titre: "Assurance Habitat",
     sousTitre: "Votre domicile protégé à 360°",
+    accroche: "Locataire ou propriétaire — couvert en moins de 5 minutes",
     description:
-      "L'assurance habitation NELLOA BANK couvre votre logement et son contenu contre tous les risques du quotidien : incendie, dégât des eaux, vol, catastrophes naturelles et responsabilité civile. Simple à souscrire, immédiate et sans paperasse.",
+      "L'assurance habitation NELLOA BANK couvre votre logement et son contenu contre tous les risques du quotidien : incendie, dégât des eaux, vol, catastrophes naturelles et responsabilité civile. Simple à souscrire, effective immédiatement, sans paperasse ni attente. L'attestation est disponible à télécharger dès la signature.",
     avantages: [
       "Couverture dégâts des eaux",
       "Protection incendie & explosion",
@@ -386,15 +594,62 @@ const offres: Record<string, OffreData> = {
       "Garantie catastrophes naturelles",
       "Assistance 24h/24 incluse",
     ],
+    avantagesCards: [
+      { titre: "Attestation immédiate", desc: "Votre attestation d'assurance est téléchargeable dans la minute suivant votre souscription.", Icon: Gift },
+      { titre: "Assistance 24 h/24", desc: "Un service d'assistance est disponible à toute heure en cas de sinistre ou d'urgence.", Icon: Headphones },
+      { titre: "Couverture complète", desc: "Incendie, dégâts des eaux, vol, responsabilité civile et catastrophes naturelles — tout est inclus.", Icon: ShieldCheck },
+      { titre: "Tarif transparent", desc: "Prix calculé en temps réel selon votre logement. Aucun frais caché, résiliation à tout moment.", Icon: Clock },
+    ],
     conditions: [
       "Être locataire ou propriétaire",
-      "Renseignements sur le logement",
+      "Renseignements sur le logement requis",
       "Attestation disponible immédiatement",
+    ],
+    eligibiliteDetail: [
+      { titre: "Pour qui ?", desc: "Tout locataire ou propriétaire d'un logement à usage d'habitation principale ou secondaire, en France métropolitaine et DOM-TOM." },
+      { titre: "Informations sur le logement", desc: "Surface habitable, type de bien (appartement ou maison), nombre de pièces, localisation et présence d'équipements spécifiques (piscine, jardin, alarme)." },
+      { titre: "Sans sélection médicale", desc: "Aucun questionnaire de santé requis. La souscription est ouverte à tous, immédiatement et sans conditions particulières." },
     ],
     steps: [
       { titre: "Je décris mon logement", desc: "Surface, type de bien (appartement/maison), localisation. Le tarif est calculé en temps réel, sans surprises." },
       { titre: "Je personnalise mes garanties", desc: "Choisissez les options complémentaires (objets de valeur, jardin, piscine) selon vos besoins spécifiques." },
-      { titre: "Je suis assuré immédiatement", desc: "Signature électronique, paiement sécurisé, attestation d'assurance téléchargeable dans la minute." },
+      { titre: "Je signe en ligne", desc: "Signature électronique sécurisée et paiement en quelques clics depuis votre espace client." },
+      { titre: "Je suis assuré immédiatement", desc: "Attestation d'assurance téléchargeable instantanément. Couverture effective dès la signature." },
+    ],
+    tarifs: [
+      {
+        titre: "Garanties incluses",
+        rows: [
+          { service: "Responsabilité civile vie privée", prix: "Incluse" },
+          { service: "Incendie, explosion, foudre", prix: "Incluse" },
+          { service: "Dégâts des eaux", prix: "Incluse" },
+          { service: "Vol et vandalisme", prix: "Incluse" },
+          { service: "Catastrophes naturelles et technologiques", prix: "Incluse" },
+          { service: "Assistance 24 h/24 en cas de sinistre", prix: "Incluse" },
+        ],
+      },
+      {
+        titre: "Options complémentaires",
+        rows: [
+          { service: "Objets de valeur (bijoux, œuvres d'art)", prix: "Sur devis" },
+          { service: "Garantie jardin / piscine", prix: "+ à partir de 3 € / mois" },
+          { service: "Protection juridique renforcée", prix: "+ à partir de 2 € / mois" },
+        ],
+      },
+    ],
+    faq: [
+      {
+        q: "Suis-je couvert immédiatement après la souscription ?",
+        a: "Oui. Votre couverture est effective dès la signature électronique de votre contrat. L'attestation d'assurance est téléchargeable instantanément depuis votre espace client.",
+      },
+      {
+        q: "Puis-je résilier à tout moment ?",
+        a: "Oui. Depuis la loi Hamon, vous pouvez résilier votre assurance habitation à tout moment après la première année, sans frais ni pénalité, en respectant un préavis d'un mois.",
+      },
+      {
+        q: "Comment déclarer un sinistre ?",
+        a: "Déclarez votre sinistre depuis votre espace client ou en appelant le service d'assistance disponible 24 h/24. Un expert est dépêché sous 48 h pour les sinistres importants.",
+      },
     ],
     cta: "Assurer mon logement",
     couleur: "from-[#0F766E] to-[#14B8A6]",
