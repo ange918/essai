@@ -3,6 +3,8 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft, CheckCircle2, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 
+type Step = { titre: string; desc: string };
+
 type OffreData = {
   slug: string;
   categorie: string;
@@ -11,6 +13,7 @@ type OffreData = {
   description: string;
   avantages: string[];
   conditions: string[];
+  steps: Step[];
   prime?: string;
   cta: string;
   couleur: string;
@@ -38,6 +41,11 @@ const offres: Record<string, OffreData> = {
       "Pièce d'identité valide",
       "Pas de revenus minimum requis",
     ],
+    steps: [
+      { titre: "Je remplis le formulaire", desc: "Indiquez vos informations personnelles en 2 minutes depuis n'importe quel appareil." },
+      { titre: "Je vérifie mon identité", desc: "Déposez une photo de votre pièce d'identité valide. Notre équipe valide votre dossier sous 24h." },
+      { titre: "J'accède à mon compte", desc: "Votre compte est activé, votre prime de 3 200 € est créditée et votre carte virtuelle est disponible immédiatement." },
+    ],
     prime: "3 200 € offerts à l'ouverture",
     cta: "Ouvrir un Compte Personnel",
     couleur: "from-[#1E3A8A] to-[#3B82F6]",
@@ -63,6 +71,11 @@ const offres: Record<string, OffreData> = {
       "Extrait Kbis ou statuts de société",
       "Pièce d'identité du gérant",
     ],
+    steps: [
+      { titre: "Je crée mon dossier", desc: "Renseignez les informations de votre entreprise et vos coordonnées professionnelles en quelques minutes." },
+      { titre: "Je fournis mes justificatifs", desc: "Déposez votre Kbis ou statuts et une pièce d'identité. Traitement prioritaire pour les professionnels." },
+      { titre: "Je commence à gérer", desc: "Votre IBAN professionnel est actif, votre carte Business est expédiée et la prime est créditée sur votre solde." },
+    ],
     prime: "3 200 € offerts à l'ouverture",
     cta: "Ouvrir un Compte Business",
     couleur: "from-[#1E3A8A] to-[#0EA5E9]",
@@ -86,6 +99,11 @@ const offres: Record<string, OffreData> = {
     conditions: [
       "Être titulaire d'un compte NELLOA BANK",
       "Vérification d'identité complétée",
+    ],
+    steps: [
+      { titre: "J'ouvre mon compte", desc: "La carte est incluse à l'ouverture de tout compte NELLOA BANK. Remplissez le formulaire en ligne." },
+      { titre: "Je choisis ma carte", desc: "Sélectionnez la carte virtuelle (disponible immédiatement) ou la carte Gold physique (livrée sous 3 jours ouvrés)." },
+      { titre: "Je paye partout", desc: "Votre carte est active. Utilisez-la en ligne, en magasin et dans le monde entier dès réception." },
     ],
     prime: "Carte offerte à l'ouverture",
     cta: "Obtenir ma carte",
@@ -113,6 +131,11 @@ const offres: Record<string, OffreData> = {
       "Taux d'endettement inférieur à 35 %",
       "Pièces d'identité et justificatifs de revenus",
     ],
+    steps: [
+      { titre: "Je simule mon prêt", desc: "Indiquez le montant, la durée souhaitée et vos revenus. Obtenez une estimation de vos mensualités en temps réel." },
+      { titre: "Je dépose mon dossier", desc: "Transmettez vos justificatifs (revenus, identité, compromis de vente). Un conseiller dédié analyse votre demande sous 48h." },
+      { titre: "Je signe et je finance", desc: "Offre de prêt validée, signature électronique, déblocage des fonds directement chez le notaire ou le vendeur." },
+    ],
     cta: "Simuler mon prêt immobilier",
     couleur: "from-[#065F46] to-[#059669]",
     icon: "🏠",
@@ -136,6 +159,11 @@ const offres: Record<string, OffreData> = {
       "Être majeur et résident",
       "Justificatif de revenus réguliers",
       "Taux d'endettement inférieur à 33 %",
+    ],
+    steps: [
+      { titre: "Je simule en ligne", desc: "Choisissez le montant et la durée. Le simulateur affiche vos mensualités et le coût total instantanément." },
+      { titre: "Je soumets ma demande", desc: "Remplissez le formulaire et joignez vos justificatifs de revenus. Réponse de principe immédiate en ligne." },
+      { titre: "Je reçois les fonds", desc: "Après validation, les fonds sont virés sur votre compte NELLOA BANK sous 24h. Utilisez-les librement." },
     ],
     cta: "Demander mon prêt personnel",
     couleur: "from-[#1E3A8A] to-[#3B82F6]",
@@ -161,6 +189,11 @@ const offres: Record<string, OffreData> = {
       "Justificatif de revenus",
       "Facture ou bon de commande du véhicule",
     ],
+    steps: [
+      { titre: "Je simule mon financement", desc: "Renseignez le prix du véhicule, votre apport et la durée souhaitée. Résultat immédiat en ligne." },
+      { titre: "Je transmets mon dossier", desc: "Joignez la facture ou le bon de commande du véhicule, votre permis et vos justificatifs de revenus." },
+      { titre: "Je prends le volant", desc: "Accord validé, les fonds sont débloqués directement auprès du vendeur ou du concessionnaire. Bonne route !" },
+    ],
     cta: "Financer mon véhicule",
     couleur: "from-[#7C2D12] to-[#EA580C]",
     icon: "🚗",
@@ -184,6 +217,11 @@ const offres: Record<string, OffreData> = {
       "Être majeur",
       "Versement initial minimum : 500 €",
       "Questionnaire de santé simplifié",
+    ],
+    steps: [
+      { titre: "Je choisis mon contrat", desc: "Sélectionnez votre profil d'investisseur (prudent, équilibré, dynamique) et le montant de votre premier versement." },
+      { titre: "Je complète mon dossier", desc: "Renseignez vos bénéficiaires et répondez au questionnaire de santé simplifié. Signature électronique en 5 minutes." },
+      { titre: "Mon épargne fructifie", desc: "Votre contrat est ouvert. Effectuez des versements à tout moment et suivez la performance depuis votre espace." },
     ],
     cta: "Souscrire une assurance vie",
     couleur: "from-[#1E3A8A] to-[#6D28D9]",
@@ -209,6 +247,11 @@ const offres: Record<string, OffreData> = {
       "Renseignements sur le logement",
       "Attestation disponible immédiatement",
     ],
+    steps: [
+      { titre: "Je décris mon logement", desc: "Surface, type de bien (appartement/maison), localisation. Le tarif est calculé en temps réel, sans surprises." },
+      { titre: "Je personnalise mes garanties", desc: "Choisissez les options complémentaires (objets de valeur, jardin, piscine) selon vos besoins spécifiques." },
+      { titre: "Je suis assuré immédiatement", desc: "Signature électronique, paiement sécurisé, attestation d'assurance téléchargeable dans la minute." },
+    ],
     cta: "Assurer mon logement",
     couleur: "from-[#0F766E] to-[#14B8A6]",
     icon: "🏡",
@@ -224,34 +267,33 @@ export function OffrePage({ slug }: { slug: string }) {
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <p className="text-2xl font-bold mb-4">Offre introuvable</p>
-          <Link href="/">
-            <Button>Retour à l'accueil</Button>
-          </Link>
+          <Link href="/"><Button>Retour à l'accueil</Button></Link>
         </div>
       </div>
     );
   }
 
+  const registerHref = `/register${offre.registerType ? `?type=${offre.registerType}` : ""}`;
+
   return (
-    <div className="min-h-screen bg-background">
-      {/* HEADER */}
+    <div className="min-h-screen bg-background flex flex-col">
+
+      {/* ── HEADER ── */}
       <header className="sticky top-0 z-50 w-full bg-white shadow-sm border-b border-border">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-          <Link href="/" className="font-bold text-xl text-primary">
-            NELLOA BANK
-          </Link>
+          <Link href="/" className="font-bold text-xl text-primary">NELLOA BANK</Link>
           <div className="flex items-center gap-3">
             <Link href="/login">
               <Button variant="outline" className="border-primary text-primary hover:bg-primary/5">Connexion</Button>
             </Link>
-            <Link href={`/register${offre.registerType ? `?type=${offre.registerType}` : ""}`}>
-              <Button className="bg-primary text-white hover:bg-primary/90">Ouvrir un compte</Button>
+            <Link href={registerHref}>
+              <Button className="bg-primary text-white hover:bg-primary/90">{offre.cta}</Button>
             </Link>
           </div>
         </div>
       </header>
 
-      {/* HERO BANNER */}
+      {/* ── HERO BANNER ── */}
       <section className={`bg-gradient-to-br ${offre.couleur} py-20 px-4`}>
         <div className="container mx-auto max-w-4xl">
           <Link href="/" className="inline-flex items-center gap-2 text-white/70 hover:text-white text-sm mb-8 transition-colors">
@@ -269,25 +311,18 @@ export function OffrePage({ slug }: { slug: string }) {
         </div>
       </section>
 
-      {/* CONTENT */}
-      <div className="container mx-auto max-w-5xl px-4 py-16">
+      {/* ── CONTENT ── */}
+      <div className="container mx-auto max-w-5xl px-4 py-16 flex-1">
         <div className="grid lg:grid-cols-3 gap-12">
-          {/* LEFT - Description + avantages */}
-          <div className="lg:col-span-2 space-y-10">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4 }}
-            >
+
+          {/* LEFT */}
+          <div className="lg:col-span-2 space-y-12">
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
               <h2 className="text-2xl font-bold text-foreground mb-4">À propos de ce produit</h2>
               <p className="text-muted-foreground leading-relaxed text-base">{offre.description}</p>
             </motion.div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: 0.1 }}
-            >
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.1 }}>
               <h2 className="text-2xl font-bold text-foreground mb-6">Ce qui est inclus</h2>
               <ul className="grid sm:grid-cols-2 gap-4">
                 {offre.avantages.map((av) => (
@@ -299,11 +334,7 @@ export function OffrePage({ slug }: { slug: string }) {
               </ul>
             </motion.div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: 0.2 }}
-            >
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: 0.2 }}>
               <h2 className="text-2xl font-bold text-foreground mb-4">Conditions d'éligibilité</h2>
               <ul className="space-y-3">
                 {offre.conditions.map((c) => (
@@ -316,7 +347,7 @@ export function OffrePage({ slug }: { slug: string }) {
             </motion.div>
           </div>
 
-          {/* RIGHT - CTA card */}
+          {/* RIGHT — sticky CTA card */}
           <div className="lg:col-span-1">
             <div className="sticky top-24 bg-card border border-border rounded-2xl p-6 shadow-md">
               <h3 className="text-xl font-bold text-foreground mb-2">{offre.titre}</h3>
@@ -328,16 +359,13 @@ export function OffrePage({ slug }: { slug: string }) {
               <p className="text-muted-foreground text-sm mb-6 leading-relaxed">
                 Ouvrez votre compte en moins de 3 minutes. Entièrement en ligne, sans rendez-vous.
               </p>
-              <Link href={`/register${offre.registerType ? `?type=${offre.registerType}` : ""}`}>
+              <Link href={registerHref}>
                 <Button className="w-full bg-primary hover:bg-primary/90 text-white h-12 flex items-center justify-center gap-2" data-testid="offre-cta-button">
                   {offre.cta}
                   <ArrowRight className="h-4 w-4" />
                 </Button>
               </Link>
-              <p className="text-xs text-muted-foreground text-center mt-4">
-                Sans engagement — ouverture gratuite
-              </p>
-
+              <p className="text-xs text-muted-foreground text-center mt-4">Sans engagement — ouverture gratuite</p>
               <div className="mt-6 pt-6 border-t border-border">
                 <p className="text-xs font-semibold text-muted-foreground mb-3">Vous avez des questions ?</p>
                 <a href="#" className="text-sm text-primary hover:underline">Contacter un conseiller →</a>
@@ -346,6 +374,93 @@ export function OffrePage({ slug }: { slug: string }) {
           </div>
         </div>
       </div>
+
+      {/* ── COMMENT ÇA MARCHE ── */}
+      <section className="py-20 bg-slate-50 border-t border-border">
+        <div className="container mx-auto max-w-5xl px-4">
+          <div className="text-center mb-14">
+            <p className="text-sm font-semibold text-secondary uppercase tracking-widest mb-3">Simple et rapide</p>
+            <h2 className="text-3xl font-bold text-foreground">Comment ça marche ?</h2>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8 relative">
+            {/* connector line (desktop only) */}
+            <div className="hidden md:block absolute top-8 left-[calc(16.66%+1rem)] right-[calc(16.66%+1rem)] h-0.5 bg-border z-0" />
+
+            {offre.steps.map((step, i) => (
+              <motion.div
+                key={step.titre}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: i * 0.12 }}
+                className="flex flex-col items-center text-center relative z-10"
+                data-testid={`step-${i + 1}`}
+              >
+                <div className={`w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold mb-5 shadow-md bg-gradient-to-br ${offre.couleur} text-white`}>
+                  {i + 1}
+                </div>
+                <h4 className="text-lg font-bold text-foreground mb-2">{step.titre}</h4>
+                <p className="text-muted-foreground text-sm leading-relaxed">{step.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── CTA BANNER ── */}
+      <section className={`py-20 px-4 bg-gradient-to-br ${offre.couleur}`}>
+        <div className="container mx-auto max-w-3xl text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+              Prêt à commencer ?
+            </h2>
+            <p className="text-white/85 text-lg mb-10 max-w-xl mx-auto">
+              Ouvrez votre {offre.titre} en moins de 3 minutes.
+              {offre.prime && ` Profitez de ${offre.prime}.`}
+            </p>
+            <Link href={registerHref}>
+              <Button
+                size="lg"
+                className="bg-white text-[#1E3A8A] hover:bg-white/90 font-semibold h-14 px-10 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 text-base"
+                data-testid="offre-cta-bottom"
+              >
+                {offre.cta}
+                <ArrowRight className="h-5 w-5 ml-2" />
+              </Button>
+            </Link>
+            <p className="text-white/60 text-sm mt-5">Sans engagement · Gratuit · 100 % en ligne</p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ── FOOTER ── */}
+      <footer className="bg-[#1E3A8A] border-t border-white/10 py-10">
+        <div className="container mx-auto px-4">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+            <Link href="/" className="font-bold text-xl text-white">NELLOA BANK</Link>
+            <nav className="flex flex-wrap justify-center gap-x-8 gap-y-2">
+              <Link href="/offres/compte-personnel" className="text-white/60 text-sm hover:text-white transition-colors">Compte Personnel</Link>
+              <Link href="/offres/compte-business" className="text-white/60 text-sm hover:text-white transition-colors">Compte Business</Link>
+              <Link href="/credits/pret-immobilier" className="text-white/60 text-sm hover:text-white transition-colors">Prêt Immobilier</Link>
+              <Link href="/credits/pret-personnel" className="text-white/60 text-sm hover:text-white transition-colors">Prêt Personnel</Link>
+              <Link href="/assurances/assurance-vie" className="text-white/60 text-sm hover:text-white transition-colors">Assurance Vie</Link>
+              <Link href="/assurances/assurance-habitat" className="text-white/60 text-sm hover:text-white transition-colors">Assurance Habitat</Link>
+            </nav>
+            <div className="flex gap-5 text-sm text-white/50">
+              <a href="#" className="hover:text-white transition-colors">Mentions légales</a>
+              <a href="#" className="hover:text-white transition-colors">Contact</a>
+            </div>
+          </div>
+          <p className="text-center text-white/40 text-xs mt-6">© 2025 NELLOA BANK. Tous droits réservés.</p>
+        </div>
+      </footer>
+
     </div>
   );
 }
