@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { useLocation } from "wouter";
 import { getSession, getUserById, clearSession, updateUser, User } from "@/lib/storage";
-import { Lock, UploadCloud, LogOut, CheckCircle2 } from "lucide-react";
+import { Lock, Clock, UploadCloud, LogOut, CheckCircle2, XCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export function DashboardPage() {
@@ -16,14 +16,12 @@ export function DashboardPage() {
       setLocation("/login");
       return;
     }
-    
     const userData = getUserById(sessionId);
     if (!userData) {
       clearSession();
       setLocation("/login");
       return;
     }
-    
     setUser(userData);
   }, [setLocation]);
 
@@ -32,12 +30,18 @@ export function DashboardPage() {
     setLocation("/login");
   };
 
-  const handleUploadDocument = () => {
-    if (!user) return;
-    updateUser(user.id, { kycStatus: 'pending' });
-    setUser({ ...user, kycStatus: 'pending' });
-    setShowSuccessMsg(true);
-    setTimeout(() => setShowSuccessMsg(false), 5000);
+  const handleReupload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file || !user) return;
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      const doc = ev.target?.result as string;
+      updateUser(user.id, { kycStatus: 'pending', idDocument: doc });
+      setUser({ ...user, kycStatus: 'pending', idDocument: doc });
+      setShowSuccessMsg(true);
+      setTimeout(() => setShowSuccessMsg(false), 6000);
+    };
+    reader.readAsDataURL(file);
   };
 
   if (!user) return null;
@@ -58,47 +62,81 @@ export function DashboardPage() {
       </header>
 
       <main className="flex-1 max-w-5xl w-full mx-auto p-4 md:p-8">
-        
+
         {user.status === 'blocked' ? (
           <div className="bg-white border border-border rounded-2xl p-8 shadow-sm text-center max-w-2xl mx-auto mt-8">
-            <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-6">
-              <Lock className="h-8 w-8 text-amber-600" />
-            </div>
-            <h2 className="text-2xl font-bold mb-4">Votre compte est bloqué</h2>
-            <p className="text-muted-foreground mb-8 text-lg">
-              Pour activer votre compte et accéder à vos 3 200 €, veuillez soumettre une pièce d'identité valide.
-            </p>
+
+            {user.kycStatus === 'pending' && (
+              <>
+                <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <Clock className="h-8 w-8 text-amber-600" />
+                </div>
+                <h2 className="text-2xl font-bold mb-3">Votre dossier est en cours de vérification</h2>
+                <p className="text-muted-foreground text-base mb-6">
+                  Nous avons bien reçu votre pièce d'identité. Notre équipe la vérifie et activera votre compte sous{" "}
+                  <span className="font-semibold text-foreground">24 à 48h</span>.
+                </p>
+                <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 text-left flex items-start gap-3">
+                  <CheckCircle2 className="h-5 w-5 text-amber-600 mt-0.5 shrink-0" />
+                  <div>
+                    <p className="font-medium text-amber-800 text-sm">Document reçu</p>
+                    <p className="text-sm text-amber-700 mt-0.5">
+                      Vous serez notifié dès que votre compte sera activé.
+                    </p>
+                  </div>
+                </div>
+              </>
+            )}
 
             {user.kycStatus === 'rejected' && (
-              <div className="bg-red-50 text-red-700 p-4 rounded-xl mb-8 flex items-start text-left">
-                <span className="text-xl mr-3">❌</span>
-                <div>
-                  <h4 className="font-bold mb-1">Votre document a été refusé</h4>
-                  <p className="text-sm">Veuillez soumettre un nouveau document valide (carte d'identité, passeport).</p>
+              <>
+                <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <XCircle className="h-8 w-8 text-red-600" />
                 </div>
-              </div>
+                <h2 className="text-2xl font-bold mb-3">Votre document a été refusé</h2>
+                <p className="text-muted-foreground text-base mb-6">
+                  Le document soumis n'a pas pu être validé. Veuillez soumettre un document valide
+                  (carte nationale d'identité, passeport ou titre de séjour).
+                </p>
+
+                {showSuccessMsg ? (
+                  <div className="bg-green-50 border border-green-200 text-green-700 p-4 rounded-xl flex items-start text-left gap-3 animate-in fade-in">
+                    <CheckCircle2 className="h-5 w-5 text-green-600 mt-0.5 shrink-0" />
+                    <div>
+                      <p className="font-bold text-sm">Nouveau document envoyé</p>
+                      <p className="text-sm mt-0.5">Notre équipe le vérifie sous 24h.</p>
+                    </div>
+                  </div>
+                ) : (
+                  <div
+                    className="border-2 border-dashed border-primary/30 rounded-xl p-10 bg-slate-50 hover:bg-slate-100 transition-colors cursor-pointer group"
+                    onClick={() => fileInputRef.current?.click()}
+                  >
+                    <input
+                      type="file"
+                      className="hidden"
+                      ref={fileInputRef}
+                      accept="image/*,.pdf"
+                      onChange={handleReupload}
+                    />
+                    <UploadCloud className="h-10 w-10 text-primary/50 mx-auto mb-4 group-hover:text-primary transition-colors" />
+                    <p className="font-medium text-foreground mb-2">
+                      Cliquez pour soumettre un nouveau document
+                    </p>
+                    <p className="text-sm text-muted-foreground">Formats acceptés : JPG, PNG, PDF — 5 Mo max</p>
+                  </div>
+                )}
+              </>
             )}
 
-            {showSuccessMsg && (
-              <div className="bg-green-50 text-green-700 p-4 rounded-xl mb-8 flex items-start text-left animate-in fade-in">
-                <span className="text-xl mr-3">✅</span>
-                <div>
-                  <h4 className="font-bold mb-1">Document envoyé</h4>
-                  <p className="text-sm">Notre équipe vérifie votre identité sous 24h.</p>
+            {user.kycStatus !== 'pending' && user.kycStatus !== 'rejected' && (
+              <>
+                <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <Lock className="h-8 w-8 text-amber-600" />
                 </div>
-              </div>
-            )}
-
-            {(user.kycStatus === 'pending' || user.kycStatus === 'rejected') && !showSuccessMsg && (
-              <div 
-                className="border-2 border-dashed border-primary/30 rounded-xl p-10 bg-slate-50 hover:bg-slate-100 transition-colors cursor-pointer group"
-                onClick={() => fileInputRef.current?.click()}
-              >
-                <input type="file" className="hidden" ref={fileInputRef} accept=".jpg,.png,.pdf" onChange={handleUploadDocument} />
-                <UploadCloud className="h-10 w-10 text-primary/50 mx-auto mb-4 group-hover:text-primary transition-colors" />
-                <p className="font-medium text-foreground mb-2">Glissez votre pièce d'identité ici ou cliquez pour parcourir</p>
-                <p className="text-sm text-muted-foreground">Formats acceptés : JPG, PNG, PDF</p>
-              </div>
+                <h2 className="text-2xl font-bold mb-3">Compte en attente d'activation</h2>
+                <p className="text-muted-foreground">Notre équipe traite votre dossier. Revenez bientôt.</p>
+              </>
             )}
           </div>
         ) : (
@@ -114,7 +152,6 @@ export function DashboardPage() {
             </div>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {/* BALANCE CARD */}
               <div className="bg-primary text-primary-foreground rounded-2xl p-6 shadow-lg lg:col-span-2 relative overflow-hidden">
                 <div className="absolute top-0 right-0 p-6 opacity-10">
                   <svg width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4Z"/></svg>
@@ -131,7 +168,6 @@ export function DashboardPage() {
                 </div>
               </div>
 
-              {/* DETAILS CARD */}
               <div className="bg-white border border-border rounded-2xl p-6 shadow-sm flex flex-col justify-between">
                 <div>
                   <h3 className="font-bold text-lg mb-4 text-foreground">Informations</h3>
@@ -142,7 +178,11 @@ export function DashboardPage() {
                     </div>
                     <div>
                       <p className="text-xs text-muted-foreground">Statut KYC</p>
-                      <p className="font-medium text-green-600">Vérifié</p>
+                      <p className="font-medium text-green-600">Vérifié ✅</p>
+                    </div>
+                    <div>
+                      <p className="text-xs text-muted-foreground">Type de compte</p>
+                      <p className="font-medium capitalize">{user.accountType}</p>
                     </div>
                   </div>
                 </div>
