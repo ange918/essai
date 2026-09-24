@@ -4,22 +4,25 @@ import { useRouter } from "next/navigation"
 import { getSession, getUserById, clearSession, updateUser, User } from "@/lib/storage"
 import { Lock, Clock, UploadCloud, LogOut, CheckCircle2, XCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { useTranslations, useLocale } from "next-intl"
 
 export default function DashboardPage() {
   const router = useRouter()
+  const locale = useLocale()
+  const t = useTranslations("dashboard")
   const [user, setUser] = useState<User | null>(null)
   const [showSuccessMsg, setShowSuccessMsg] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
     const sessionId = getSession()
-    if (!sessionId) { router.push("/login"); return }
+    if (!sessionId) { router.push(`/${locale}/login`); return }
     const userData = getUserById(sessionId)
-    if (!userData) { clearSession(); router.push("/login"); return }
+    if (!userData) { clearSession(); router.push(`/${locale}/login`); return }
     setUser(userData)
-  }, [router])
+  }, [router, locale])
 
-  const handleLogout = () => { clearSession(); router.push("/login") }
+  const handleLogout = () => { clearSession(); router.push(`/${locale}/login`) }
 
   const handleReupload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
@@ -44,7 +47,7 @@ export default function DashboardPage() {
         <div className="flex items-center gap-4">
           <span className="text-sm font-medium text-foreground hidden md:inline-block">{user.firstName} {user.lastName}</span>
           <Button variant="ghost" size="sm" onClick={handleLogout} className="text-muted-foreground hover:text-destructive">
-            <LogOut className="h-4 w-4 mr-2" />Déconnexion
+            <LogOut className="h-4 w-4 mr-2" />{t("deconnexion")}
           </Button>
         </div>
       </header>
@@ -57,13 +60,13 @@ export default function DashboardPage() {
                 <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-6">
                   <Clock className="h-8 w-8 text-amber-600" />
                 </div>
-                <h2 className="text-2xl font-bold mb-3">Votre dossier est en cours de vérification</h2>
-                <p className="text-muted-foreground text-base mb-6">Nous avons bien reçu votre pièce d&apos;identité. Notre équipe la vérifie et activera votre compte sous <span className="font-semibold text-foreground">24 à 48h</span>.</p>
+                <h2 className="text-2xl font-bold mb-3">{t("enAttente")}</h2>
+                <p className="text-muted-foreground text-base mb-6">{t("enAttenteDesc")} <span className="font-semibold text-foreground">{t("enAttenteDelai")}</span>.</p>
                 <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 text-left flex items-start gap-3">
                   <CheckCircle2 className="h-5 w-5 text-amber-600 mt-0.5 shrink-0" />
                   <div>
-                    <p className="font-medium text-amber-800 text-sm">Document reçu</p>
-                    <p className="text-sm text-amber-700 mt-0.5">Vous serez notifié dès que votre compte sera activé.</p>
+                    <p className="font-medium text-amber-800 text-sm">{t("documentRecu")}</p>
+                    <p className="text-sm text-amber-700 mt-0.5">{t("documentRecuDesc")}</p>
                   </div>
                 </div>
               </>
@@ -73,22 +76,22 @@ export default function DashboardPage() {
                 <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6">
                   <XCircle className="h-8 w-8 text-red-600" />
                 </div>
-                <h2 className="text-2xl font-bold mb-3">Votre document a été refusé</h2>
-                <p className="text-muted-foreground text-base mb-6">Le document soumis n&apos;a pas pu être validé. Veuillez soumettre un document valide (carte nationale d&apos;identité, passeport ou titre de séjour).</p>
+                <h2 className="text-2xl font-bold mb-3">{t("refuse")}</h2>
+                <p className="text-muted-foreground text-base mb-6">{t("refuseDesc")}</p>
                 {showSuccessMsg ? (
                   <div className="bg-green-50 border border-green-200 text-green-700 p-4 rounded-xl flex items-start text-left gap-3">
                     <CheckCircle2 className="h-5 w-5 text-green-600 mt-0.5 shrink-0" />
                     <div>
-                      <p className="font-bold text-sm">Nouveau document envoyé</p>
-                      <p className="text-sm mt-0.5">Notre équipe le vérifie sous 24h.</p>
+                      <p className="font-bold text-sm">{t("nouveauDoc")}</p>
+                      <p className="text-sm mt-0.5">{t("nouveauDocDesc")}</p>
                     </div>
                   </div>
                 ) : (
                   <div className="border-2 border-dashed border-primary/30 rounded-xl p-10 bg-slate-50 hover:bg-slate-100 transition-colors cursor-pointer group" onClick={() => fileInputRef.current?.click()}>
                     <input type="file" className="hidden" ref={fileInputRef} accept="image/*,.pdf" onChange={handleReupload} />
                     <UploadCloud className="h-10 w-10 text-primary/50 mx-auto mb-4 group-hover:text-primary transition-colors" />
-                    <p className="font-medium text-foreground mb-2">Cliquez pour soumettre un nouveau document</p>
-                    <p className="text-sm text-muted-foreground">Formats acceptés : JPG, PNG, PDF — 5 Mo max</p>
+                    <p className="font-medium text-foreground mb-2">{t("uploadDoc")}</p>
+                    <p className="text-sm text-muted-foreground">{t("uploadDocNote")}</p>
                   </div>
                 )}
               </>
@@ -98,8 +101,8 @@ export default function DashboardPage() {
                 <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-6">
                   <Lock className="h-8 w-8 text-amber-600" />
                 </div>
-                <h2 className="text-2xl font-bold mb-3">Compte en attente d&apos;activation</h2>
-                <p className="text-muted-foreground">Notre équipe traite votre dossier. Revenez bientôt.</p>
+                <h2 className="text-2xl font-bold mb-3">{t("attente")}</h2>
+                <p className="text-muted-foreground">{t("attenteDesc")}</p>
               </>
             )}
           </div>
@@ -107,38 +110,38 @@ export default function DashboardPage() {
           <div className="space-y-8 mt-4">
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
               <div>
-                <h1 className="text-3xl md:text-4xl font-bold mb-2">Bienvenue, {user.firstName} 👋</h1>
-                <p className="text-muted-foreground">Gérez vos finances en toute simplicité.</p>
+                <h1 className="text-3xl md:text-4xl font-bold mb-2">{t("bienvenue")}, {user.firstName} 👋</h1>
+                <p className="text-muted-foreground">{t("sousTitre")}</p>
               </div>
-              <div className="inline-flex items-center bg-green-100 text-green-800 px-4 py-2 rounded-full font-semibold text-sm">Compte actif ✅</div>
+              <div className="inline-flex items-center bg-green-100 text-green-800 px-4 py-2 rounded-full font-semibold text-sm">{t("compteActif")}</div>
             </div>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               <div className="bg-primary text-primary-foreground rounded-2xl p-6 shadow-lg lg:col-span-2 relative overflow-hidden">
                 <div className="relative z-10">
-                  <p className="text-primary-foreground/80 font-medium mb-1 capitalize">Compte {user.accountType}</p>
+                  <p className="text-primary-foreground/80 font-medium mb-1 capitalize">{t("compte")} {user.accountType}</p>
                   <h2 className="text-4xl md:text-5xl font-bold mb-6">
-                    {new Intl.NumberFormat("fr-FR", { style: "currency", currency: user.currency }).format(user.balance)}
+                    {new Intl.NumberFormat(locale === "pl" ? "pl-PL" : "fr-FR", { style: "currency", currency: user.currency }).format(user.balance)}
                   </h2>
                   <div className="flex gap-4">
-                    <Button className="bg-white text-primary hover:bg-white/90">Faire un virement</Button>
-                    <Button variant="outline" className="text-white border-white/30 hover:bg-white/10 hover:text-white">Relevé d&apos;identité</Button>
+                    <Button className="bg-white text-primary hover:bg-white/90">{t("faireVirement")}</Button>
+                    <Button variant="outline" className="text-white border-white/30 hover:bg-white/10 hover:text-white">{t("releve")}</Button>
                   </div>
                 </div>
               </div>
               <div className="bg-white border border-border rounded-2xl p-6 shadow-sm flex flex-col justify-between">
                 <div>
-                  <h3 className="font-bold text-lg mb-4 text-foreground">Informations</h3>
+                  <h3 className="font-bold text-lg mb-4 text-foreground">{t("informations")}</h3>
                   <div className="space-y-4">
                     <div>
-                      <p className="text-xs text-muted-foreground">Ouverture le</p>
-                      <p className="font-medium">{new Date(user.createdAt).toLocaleDateString("fr-FR")}</p>
+                      <p className="text-xs text-muted-foreground">{t("ouvertureLabel")}</p>
+                      <p className="font-medium">{new Date(user.createdAt).toLocaleDateString(locale === "pl" ? "pl-PL" : "fr-FR")}</p>
                     </div>
                     <div>
-                      <p className="text-xs text-muted-foreground">Statut KYC</p>
-                      <p className="font-medium text-green-600">Vérifié ✅</p>
+                      <p className="text-xs text-muted-foreground">{t("statutKyc")}</p>
+                      <p className="font-medium text-green-600">{t("statutKycVerifie")}</p>
                     </div>
                     <div>
-                      <p className="text-xs text-muted-foreground">Type de compte</p>
+                      <p className="text-xs text-muted-foreground">{t("typeCompte")}</p>
                       <p className="font-medium capitalize">{user.accountType}</p>
                     </div>
                   </div>
